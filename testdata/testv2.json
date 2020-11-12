@@ -1,0 +1,47 @@
+{
+    "user": "sidd",
+    "message": {
+        "messageId": "m1",
+        "messageText": "Please select city",
+        "messageType": "plaintext",
+        "attachments":[
+            {
+                "attachmentId": "a1",
+                "atachmentSeq": 1,
+                "attachmentDesc": "Cities",
+                "attachmentType": "dropdown",
+                "options": [
+                    {"value": "kolkata"},
+                    {"value": "bangalore"}
+                ]
+
+            },
+            {
+                "attachmentId": "a3",
+                "atachmentSeq": 3,
+                "attachmentDesc": "Confirmation",
+                "attachmentType": "button",
+                "options": [
+                    {"value": "Y"},
+                    {"value": "N"}
+                ]
+            },
+            {
+                "attachmentId": "a2",
+                "attachmentSeq": 2,
+                "attachmentDesc": "Is this your home city?",
+                "attachmentType": "checkbox",
+                "options": [
+                    {"value": "Y", "setInitial": true},
+                    {"value": "N"}
+                ]
+            },
+            {
+                "attachmentId": "a4",
+                "attachmentSeq": 4,
+                "attachmentDesc": "Please select date",
+                "attachmentType": "datepicker"
+            }
+        ]
+    }
+}

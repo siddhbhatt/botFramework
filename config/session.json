@@ -1,0 +1,10 @@
+[
+    {
+        "sessionId": "abc123",
+        "userId": "sidd",
+        "journeyName": "bookcab",
+        "blockName": "entry_msg",
+        "blockSeq": 1, 
+        "startTS": "01-01-2000 00:00:00:000"
+    }
+]

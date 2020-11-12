@@ -1,0 +1,54 @@
+{
+    "botName": null,
+    "intents": [
+        {
+            "patterns": [],
+            "journeyName": null
+        }
+    ],
+    "journey": [
+        {
+            "journeyName": null,
+            "blocks": [
+                {
+                    "blockName": null,
+                    "type": null,
+                    "getVariables": [],
+                    "inputMapping": {},
+                    "rules": [],
+                    "api": {
+                        "apiType": null,
+                        "endpoint": null,
+                        "params": [
+                            {
+                                "key": null,
+                                "value": null
+                            }
+                        ],
+                        "dataMapping": {},
+                        "outputMapping": {}
+                    },
+                    "output": {},
+                    "setVariables": [
+                        {
+                            "entity": null,
+                            "scope": "global/local",
+                            "variables":[{
+                                "variableName": null, 
+                                "value": null,
+                                "scope": "global/local"}
+                            ]
+                            
+                        }
+                    ],
+                    "next":[
+                        {
+                            "journeyName": null,
+                            "blockName": null
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

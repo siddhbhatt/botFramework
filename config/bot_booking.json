@@ -1,0 +1,317 @@
+{
+	"botName": "mybot",
+	"intents": [{
+			"patterns": ["I want to book a cab", "book my cab", "get me taxi", "book a car"],
+			"journeyName": "bookcab",
+			"inputMapping": {
+				"data": "message",
+				"channel": "cabbookchannel",
+				"user": "Sidd"
+			}
+		},
+		{
+			"patterns": ["I want to book a hotel", "book my hotel"],
+			"journeyName": "bookhotel",
+			"inputMapping": {
+				"data": "message",
+				"channel": "hostelbookchannel",
+				"user": "Sidd"
+			}
+		}
+	],
+	"journey": [{
+			"journeyName": "bookcab",
+			"blocks": [{
+					"blockSeq": 1,
+					"blockName": "entry_msg",
+					"type": "output",
+					"getVariables": [],
+					"inputMapping": {},
+					"rules": [],
+					"api": {
+						"apiType": "GET",
+						"endpoint": "/getcities",
+						"params": [{
+							"key": "country",
+							"value": "india"
+						}],
+						"dataMapping": {},
+						"outputMapping": {
+							"attachment": "response.text",
+							"status": "response.status",
+							"confirmationId": "response.text[confirmationId]"
+						}
+					},
+					"output": {
+						"message": "Sure, Please provide the city",
+						"messageType": "dropdown",
+						"attachemnt": "attachment",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"setVariables": [{
+						"entity": null,
+						"scope": "global/local",
+						"variables": [{
+							"variableName": null,
+							"value": null,
+							"scope": "global/local"
+						}]
+
+					}],
+					"next": [{
+						"journeyName": "bookcab",
+						"blockName": "getdate"
+					}]
+				},
+				{
+					"blockSeq": 2,
+					"blockName": "getdate",
+					"type": "input",
+					"getVariables": [],
+					"inputMapping": {
+						"data": "attachment[options]",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"rules": [],
+					"api": {
+						"apiType": "",
+						"endpoint": "",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {
+							"attachment": ""
+						}
+					},
+					"output": {
+						"message": "Please Select the Date",
+						"messageType": "dateTimePicker()",
+						"attachemnt": "",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"setVariables": [{
+						"entity": "city",
+						"scope": "global",
+						"variables": [{
+							"variableName": "cityName",
+							"value": "data",
+							"scope": "global"
+						}]
+					}],
+					"next": [{
+						"journeyName": "bookcab",
+						"blockName": "confirmbooking"
+					}]
+				},
+				{
+					"blockSeq": 3,
+					"blockName": "confirmbooking",
+					"type": "input",
+					"getVariables": ["city.cityName"],
+					"inputMapping": {
+						"data": "{date:dataPicker().date(),time:dataPicker().time()}",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"rules": [],
+					"api": {
+						"apiType": "POST",
+						"endpoint": "/confirmBooking",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {
+							"city": "city.cityName",
+							"date": "data[date]",
+							"time": "time[time]"
+						},
+						"outputMapping": {
+							"attachment": "",
+							"status": "response.status",
+							"confirmationId": "response.text[confirmationId]"
+						}
+					},
+					"output": {
+						"message": "Your Cab Booking is Confirmed,your Confirmation id:{confirmationId}",
+						"messageType": "text",
+						"attachemnt": "",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"setVariables": [{
+						"entity": "date",
+						"scope": "global",
+						"variables": [{
+								"variableName": "date",
+								"value": "data[date]",
+								"scope": "global"
+							},
+							{
+								"variableName": "time",
+								"value": "data[time]",
+								"scope": "global"
+							}
+						]
+					}],
+					"next": [{
+						"journeyName": "bookcab",
+						"blockName": ""
+					}]
+				}
+			]
+		},
+		{
+			"journeyName": "bookhotel",
+			"blocks": [{
+					"blockSeq": 1,
+					"blockName": "entry_msg",
+					"type": "output",
+					"getVariables": [],
+					"inputMapping": {},
+					"rules": [],
+					"api": {
+						"apiType": "GET",
+						"endpoint": "/getcities",
+						"params": [{
+							"key": "country",
+							"value": "india"
+						}],
+						"dataMapping": {},
+						"outputMapping": {
+							"attachment": "response.text",
+							"status": "response.status",
+							"confirmationId": "response.text[confirmationId]"
+						}
+					},
+					"output": {
+						"message": "Sure,Please provide the city",
+						"messageType": "dropdown",
+						"attachemnt": "attachment",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"setVariables": [{
+						"entity": null,
+						"scope": "global/local",
+						"variables": [{
+							"variableName": null,
+							"value": null,
+							"scope": "global/local"
+						}]
+
+					}],
+					"next": [{
+						"journeyName": "bookhotel",
+						"blockName": "getdate"
+					}]
+				},
+				{
+					"blockSeq": 2,
+					"blockName": "getdate",
+					"type": "input",
+					"getVariables": [],
+					"inputMapping": {
+						"data": "attachment[options]",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"rules": [],
+					"api": {
+						"apiType": "",
+						"endpoint": "",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {
+							"attachment": ""
+						}
+					},
+					"output": {
+						"message": "Please Select the Date",
+						"messageType": "dateTimePicker()",
+						"attachemnt": "",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"setVariables": [{
+						"entity": "city",
+						"scope": "global",
+						"variables": [{
+							"variableName": "cityName",
+							"value": "data",
+							"scope": "global"
+						}]
+					}],
+					"next": [{
+						"journeyName": "bookhotel",
+						"blockName": "confirmbooking"
+					}]
+				},
+				{
+					"blockSeq": 3,
+					"blockName": "confirmbooking",
+					"type": "input",
+					"getVariables": ["city.cityName"],
+					"inputMapping": {
+						"data": "{date:dataPicker().date(),time:dataPicker().time()}",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"rules": [],
+					"api": {
+						"apiType": "POST",
+						"endpoint": "/confirmBooking",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {
+							"city": "city.cityName",
+							"date": "data[date]",
+							"time": "time[time]"
+						},
+						"outputMapping": {
+							"attachment": "",
+							"status": "response.status",
+							"confirmationId": "response.text[confirmationId]"
+						}
+					},
+					"output": {
+						"message": "Your Cab Booking is Confirmed,your Confirmation id:{confirmationId}",
+						"messageType": "text",
+						"attachemnt": "",
+						"channel": "cabbookchannel",
+						"user": "Sidd"
+					},
+					"setVariables": [{
+						"entity": "date",
+						"scope": "global",
+						"variables": [{
+								"variableName": "date",
+								"value": "data[date]",
+								"scope": "global"
+							},
+							{
+								"variableName": "time",
+								"value": "data[time]",
+								"scope": "global"
+							}
+						]
+					}],
+					"next": [{
+						"journeyName": "bookhotel",
+						"blockName": ""
+					}]
+				}
+			]
+		}
+	]
+}

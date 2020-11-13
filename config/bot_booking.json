@@ -43,11 +43,24 @@
 						}
 					},
 					"output": {
-						"message": "Sure, Please provide the city",
-						"messageType": "dropdown",
-						"attachemnt": "attachment",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
+						"message": {
+							"messageId": "m1",
+							"messageText": "Please select city",
+							"messageType": "plaintext",
+							"attachments":[
+								{
+									"attachmentId": "a1",
+									"atachmentSeq": 1,
+									"attachmentDesc": "Cities",
+									"attachmentType": "dropdown",
+									"options": [
+										{"value": "kolkata"},
+										{"value": "bangalore"}
+									]
+					
+								}
+							]
+						}
 					},
 					"setVariables": [{
 						"entity": null,

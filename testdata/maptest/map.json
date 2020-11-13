@@ -1,0 +1,17 @@
+[
+    {
+        "out1": {"country": "name"}
+    },
+    {
+        "out2": [{"value": ["country", "states", ["cities", []]]}]
+    },
+    {
+        "out3": ["country", "states", ["name"]]
+    },
+    {
+        "out4": ["country", "states", ["county", ["name"]]]
+    },
+    {
+        "out5": "continent"
+    }
+]

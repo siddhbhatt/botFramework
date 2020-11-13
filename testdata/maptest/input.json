@@ -1,0 +1,17 @@
+{
+    "country": {
+        "name": "India",
+        "states": [
+            {
+                "name": "WB",
+                "cities": ["Kolkata", "Burdwan"],
+                "county": [{"name": "C1"}, {"id": 1}]
+            },
+            {
+                "name": "AP",
+                "cities": ["Hyderabad"]
+            }
+        ]
+    },
+    "continent": "Asia"
+}

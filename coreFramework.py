@@ -45,6 +45,9 @@ class block(metadata):
     def getVariables(self):
         pass
 
+    def mapInput(self):
+        pass
+
     def applyRules(self):
         pass
 
@@ -122,6 +125,12 @@ class sessionManager(block):
         return intent
 
     def executeBlock(self, block):
+        self.getVariables()
+        self.mapInput()
+        self.applyRules()
+        self.callApi()
+        self.mapOutput()
+        self.setVariables()
         response = self.sendReponse(block['journeyName'], block['blockName'])
         return response
 

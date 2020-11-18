@@ -68,7 +68,15 @@
 									"atachmentSeq": 1,
 									"attachmentDesc": "Cities",
 									"attachmentType": "dropdown",
-									"options": "@out2@"
+									"options": ["@out2@"]
+					
+								},
+								{
+									"attachmentId": "a2",
+									"atachmentSeq": 2,
+									"attachmentDesc": "Pl confirm selection",
+									"attachmentType": "button",
+									"options": [{"value":"Y"}, {"value":"N"}]
 					
 								}
 							]

@@ -29,7 +29,7 @@ def journeyManager():
         next = sm.getNext(session['journeyName'], blockName=session['blockName'])
         if len(next) == 0:
             sm.deleteSession(session['sessionId'])
-            response = startJourney(data['messageText'], data['user'])
+            response = startJourney(data['message']['messageText'], data['user'])
         else:
             for i in next:
                 print(i)
@@ -37,7 +37,7 @@ def journeyManager():
                 _, _ = sm.updateSession(session['userId'], 
                 i['journeyName'], i['blockName'], i['blockName']) #should update based on sessionId and item in next list
     else:
-        response = startJourney(data['messageText'], data['user'])
+        response = startJourney(data['message']['messageText'], data['user'])
             
     return jsonify(response)
 

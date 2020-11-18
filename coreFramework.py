@@ -4,6 +4,7 @@ import requests
 import uuid
 import time
 import pandas as pd
+import re
 
 #Path variables
 SESSION_PATH = 'config/session.json'
@@ -13,7 +14,6 @@ INTENT_ENDPOINT = "http://127.0.0.1:2005/api/intentController/"
 #Metadata class
 class metadata:
     intentendpoint = INTENT_ENDPOINT
-    #intents = json.loads(open("../config/bot_booking.json"))
     botdata = json.load(open(BOTCONFIG_PATH))
     try:
         session = json.load(open(SESSION_PATH))
@@ -53,10 +53,10 @@ class block(metadata):
         return True
 
     def callAPI(self, journeyName, blockName, **kwargs):
-        for a in botdata['journey']:
-            if a['journeyName'] == jname:
+        for a in self.botdata['journey']:
+            if a['journeyName'] == journeyName:
                 for b in a['blocks']:
-                    if b['blockName'] == bname:
+                    if b['blockName'] == blockName:
                         api = b.get('api')
         
         exStr = None
@@ -125,13 +125,43 @@ class block(metadata):
 
         return out
 
-    def sendReponse(self, journeyName, blockName):
-        response = {}
+    def fixDtype(self, l):
+        fixedList =[]
+        for n in l:
+            fixedList.append(json.loads(n))
+        return fixedList
+    
+    def resolveVariables(self, x, response):
+        if isinstance(x, list) and x:
+            out =[]
+            for n in x:
+                #print ("Debug line - n = ", n)
+                from_api = re.search('\@(.*)\@', str(n))
+                for a in response:
+                    if isinstance(a,dict):
+                        for k,v in a.items():
+                            if k == from_api.group(1):
+                                if isinstance(v,list):
+                                    out = out + v
+                                else:
+                                    out.append(v)
+
+        return out
+
+    def sendReponse(self, journeyName, blockName, r):
+        #response = {}
         for p in self.botdata['journey']:
             if p['journeyName'] == journeyName:
                 for q in p['blocks']:
                     if q['blockName'] == blockName:
                         response = q['output']
+
+        for i in response['message']['attachments']:
+            if i['options'] and r:
+                x = self.resolveVariables(i['options'], r)
+                i['options'] = x
+
+        
         return response
 
     def setVariables(self):
@@ -199,6 +229,6 @@ class sessionManager(block):
         if check:
             response = self.callAPI(block['journeyName'], block['blockName'])
             self.setVariables()
-            response = self.sendReponse(block['journeyName'], block['blockName'])
-            return response
+            result = self.sendReponse(block['journeyName'], block['blockName'], response)
+            return result
 

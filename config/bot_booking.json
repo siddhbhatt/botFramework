@@ -36,11 +36,26 @@
 							"value": "india"
 						}],
 						"dataMapping": {},
-						"outputMapping": {
-							"attachment": "response.text",
-							"status": "response.status",
-							"confirmationId": "response.text[confirmationId]"
-						}
+						"outputMapping": [
+							{
+								"map": {"name": "out1", "path": ["country","name"], "outputFormat": "item"}
+							},
+							{
+								"map": {"name": "out2", "path": ["country","states","cities"], "outputFormat": "jsonarray", "outputTag": "value"}
+							},
+							{
+								"map": {"name": "out3", "path": ["country","states","name"], "outputFormat": "arrayitem"}
+							},
+							{
+								"map": {"name": "out4", "path": ["country","states","county","name"], "outputFormat": "arrayitem"}
+							},
+							{
+								"map": {"name": "out5", "path": ["continent"], "outputFormat": "item"}
+							},
+							{
+								"map": {"name": "out6", "path": ["country", "states", "ward", "no"], "outputFormat": "arrayitem"}
+							}
+						]
 					},
 					"output": {
 						"message": {
@@ -53,10 +68,7 @@
 									"atachmentSeq": 1,
 									"attachmentDesc": "Cities",
 									"attachmentType": "dropdown",
-									"options": [
-										{"value": "kolkata"},
-										{"value": "bangalore"}
-									]
+									"options": "@out2@"
 					
 								}
 							]

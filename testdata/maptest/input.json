@@ -1,17 +1,20 @@
 {
     "country": {
-        "name": "India",
+        "name": ["India"],
         "states": [
             {
-                "name": "WB",
+                "name": ["WB"],
                 "cities": ["Kolkata", "Burdwan"],
-                "county": [{"name": "C1"}, {"id": 1}]
+                "county": [{"name": ["C1"], "id": 1}],
+                "ward": [{"city": "kolkata", "no": [132, 110, 144]}]
             },
             {
-                "name": "AP",
-                "cities": ["Hyderabad"]
+                "name": ["AP"],
+                "cities": ["Hyderabad"],
+				"ward": [{"city": "Hyderabad", "no": [221, 32, 11]}],
+				"county": [{"name": ["C2"], "id": 4}]
             }
         ]
     },
-    "continent": "Asia"
+    "continent": ["Asia"]
 }

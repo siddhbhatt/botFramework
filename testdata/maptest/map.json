@@ -1,17 +1,20 @@
 [
     {
-        "out1": {"country": "name"}
+        "map": {"name": "out1", "path": ["country","name"], "outputFormat": "item"}
     },
     {
-        "out2": [{"value": ["country", "states", ["cities", []]]}]
+        "map": {"name": "out2", "path": ["country","states","cities"], "outputFormat": "jsonarray", "outputTag": "options"}
     },
     {
-        "out3": ["country", "states", ["name"]]
+        "map": {"name": "out3", "path": ["country","states","name"], "outputFormat": "arrayitem"}
     },
     {
-        "out4": ["country", "states", ["county", ["name"]]]
+        "map": {"name": "out4", "path": ["country","states","county","name"], "outputFormat": "arrayitem"}
     },
     {
-        "out5": "continent"
+        "map": {"name": "out5", "path": ["continent"], "outputFormat": "item"}
+    },
+    {
+        "map": {"name": "out6", "path": ["country", "states", "ward", "no"], "outputFormat": "arrayitem"}
     }
 ]

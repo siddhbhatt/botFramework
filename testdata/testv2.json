@@ -13,7 +13,8 @@
                 "options": [
                     {"value": "kolkata"},
                     {"value": "bangalore"}
-                ]
+                ],
+                "optionsSelected":[]
 
             },
             {
@@ -24,7 +25,8 @@
                 "options": [
                     {"value": "Y"},
                     {"value": "N"}
-                ]
+                ],
+                "optionsSelected":[]
             },
             {
                 "attachmentId": "a2",
@@ -34,13 +36,16 @@
                 "options": [
                     {"value": "Y", "setInitial": true},
                     {"value": "N"}
-                ]
+                ],
+                "optionsSelected":[]
             },
             {
                 "attachmentId": "a4",
                 "attachmentSeq": 4,
                 "attachmentDesc": "Please select date",
-                "attachmentType": "datepicker"
+                "attachmentType": "datepicker",
+                "options":[],
+                "optionsSelected":[]
             }
         ]
     }

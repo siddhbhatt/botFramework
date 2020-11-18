@@ -3,6 +3,7 @@ import json
 import requests
 import uuid
 import time
+import pandas as pd
 
 #Path variables
 SESSION_PATH = 'config/session.json'
@@ -49,13 +50,80 @@ class block(metadata):
         pass
 
     def applyRules(self):
-        pass
+        return True
 
-    def callApi(self):
-        pass
+    def callAPI(self, journeyName, blockName, **kwargs):
+        for a in botdata['journey']:
+            if a['journeyName'] == jname:
+                for b in a['blocks']:
+                    if b['blockName'] == bname:
+                        api = b.get('api')
+        
+        exStr = None
+        payload ={}
+        if api['apiType'] == 'GET':
+            if len(api['params']) > 0:
+                for n in api['params']:
+                    p = {n['key']: n['value']}
+                    if not payload:
+                        payload = p
+                    else:
+                        payload = payload.update(p)
+                
+            exStr = 'requests.get(url="' + str(api['endpoint']) + '", params=' + json.dumps(payload) +')'
+            
+        elif api['apiType'] == 'POST':
+            payload = api['dataMapping']
+            exStr = 'requests.post(url="' + str(api['endpoint']) + '", data=' + json.dumps(payload) +')'
+        else:
+            return []
+            
+        print ("exStr = ", exStr)
+        try:
+            ex = exec(exStr)
+            response = json.loads(ex.text)
+            if len(api['outputMapping']) > 0:
+                output = self.mapping(api['outputMapping'], response)
+            else:
+                output = response
+            return output
+        except Exception as e:
+            print("Error from callAPI: ", e)
 
-    def mapOutput(self):
-        pass
+    def iterdict(self, d, lt):
+        for k,v in d.items():
+            if isinstance(v, dict):
+                _ = self.iterdict(v, lt)
+            else:
+                lt.append(v)
+        return lt
+
+    def mapping(self, map, input):
+        out=[]
+        
+        for xmap in map:
+            for key,value in xmap.items():
+                if key == 'map':
+                    for k, v in value.items():
+                        lt = []
+                        if k == 'path':
+                            x = pd.json_normalize(input, v).to_dict()
+                            r = self.iterdict(x, lt)
+                            if value['outputFormat'] == 'item' and len(r)==1:
+                                d = {value['name']: r[0]}
+                            elif value['outputFormat'] == 'arrayitem':
+                                d = {value['name']: r}
+                            elif value['outputFormat'] == 'jsonarray' and 'outputTag' in value.keys():
+                                int_l = []
+                                for n in r:
+                                    int_d = {value['outputTag']: n}
+                                    int_l.append(int_d)
+                                d = {value['name']: int_l}
+                            else:
+                                print("Error from mapping: Invalid mapping")
+                            out.append(d)
+
+        return out
 
     def sendReponse(self, journeyName, blockName):
         response = {}
@@ -127,10 +195,10 @@ class sessionManager(block):
     def executeBlock(self, block):
         self.getVariables()
         self.mapInput()
-        self.applyRules()
-        self.callApi()
-        self.mapOutput()
-        self.setVariables()
-        response = self.sendReponse(block['journeyName'], block['blockName'])
-        return response
+        check = self.applyRules()
+        if check:
+            response = self.callAPI(block['journeyName'], block['blockName'])
+            self.setVariables()
+            response = self.sendReponse(block['journeyName'], block['blockName'])
+            return response
 

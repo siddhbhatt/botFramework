@@ -1,0 +1,8 @@
+[
+    {"out1": "India"}, 
+    {"out2": [{"options": "Kolkata"}, {"options": "Burdwan"}, {"options": "Hyderabad"}]}, 
+    {"out3": ["WB", "AP"]}, 
+    {"out4": ["C1", "C2"]}, 
+    {"out5": "Asia"}, 
+    {"out6": [132, 110, 144, 221, 32, 11]}
+]

@@ -30,7 +30,7 @@
 					"rules": [],
 					"api": {
 						"apiType": "GET",
-						"endpoint": "/getcities",
+						"endpoint": "http://127.0.0.1:2020/testapi/cities",
 						"params": [{
 							"key": "country",
 							"value": "india"
@@ -121,11 +121,18 @@
 						}
 					},
 					"output": {
-						"message": "Please Select the Date",
-						"messageType": "dateTimePicker()",
-						"attachemnt": "",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
+						"message":{
+							"messageId": "m2",
+							"messageText": "Please Select the Date",
+							"messageType": "plaintext",
+							"attachments": [{
+									"attachmentId": "a2",
+									"atachmentSeq": 1,
+									"attachmentDesc": "Date Selection",
+									"attachmentType": "datepicker",
+									"options": []
+								}]
+						}
 					},
 					"setVariables": [{
 						"entity": "city",

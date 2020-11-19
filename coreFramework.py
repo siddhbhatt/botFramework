@@ -60,6 +60,7 @@ class block(metadata):
                         api = b.get('api')
         
         exStr = None
+        output = None
         payload ={}
         if api['apiType'] == 'GET':
             if len(api['params']) > 0:
@@ -70,25 +71,29 @@ class block(metadata):
                     else:
                         payload = payload.update(p)
                 
-            exStr = 'requests.get(url="' + str(api['endpoint']) + '", params=' + json.dumps(payload) +')'
+            exStr = 'block.foo = lambda self: requests.get(url="' + str(api['endpoint']) + '", params=' + json.dumps(payload) +')'
             
         elif api['apiType'] == 'POST':
             payload = api['dataMapping']
-            exStr = 'requests.post(url="' + str(api['endpoint']) + '", data=' + json.dumps(payload) +')'
+            exStr = 'block.foo = lambda self: requests.post(url="' + str(api['endpoint']) + '", data=' + json.dumps(payload) +')'
         else:
             return []
             
         print ("exStr = ", exStr)
+        
         try:
-            ex = exec(exStr)
+            exec(exStr)
+            ex = self.foo()
             response = json.loads(ex.text)
+            #print("debug line - response = ", response)
             if len(api['outputMapping']) > 0:
                 output = self.mapping(api['outputMapping'], response)
+                #print("debug line - output = ", output)
             else:
                 output = response
-            return output
         except Exception as e:
             print("Error from callAPI: ", e)
+        return output
 
     def iterdict(self, d, lt):
         for k,v in d.items():
@@ -137,14 +142,15 @@ class block(metadata):
             for n in x:
                 #print ("Debug line - n = ", n)
                 from_api = re.search('\@(.*)\@', str(n))
-                for a in response:
-                    if isinstance(a,dict):
-                        for k,v in a.items():
-                            if k == from_api.group(1):
-                                if isinstance(v,list):
-                                    out = out + v
-                                else:
-                                    out.append(v)
+                if from_api:
+                    for a in response:
+                        if isinstance(a,dict):
+                            for k,v in a.items():
+                                if k == from_api.group(1):
+                                    if isinstance(v,list):
+                                        out = out + v
+                                    else:
+                                        out.append(v)
 
         return out
 
@@ -156,10 +162,13 @@ class block(metadata):
                     if q['blockName'] == blockName:
                         response = q['output']
 
+        #print ("debug line - response = ", response)
         for i in response['message']['attachments']:
+            #print("debug line - i = ", i)
             if i['options'] and r:
                 x = self.resolveVariables(i['options'], r)
-                i['options'] = x
+                if x:
+                    i['options'] = x
 
         
         return response

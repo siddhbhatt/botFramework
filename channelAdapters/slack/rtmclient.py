@@ -2,6 +2,7 @@ from slack import RTMClient
 from slack.errors import SlackApiError
 import requests
 import json
+import uuid
 
 SLACK_BOT_TOKEN = 'xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD'
 BOT_ENDPOINT = "http://127.0.0.1:2000/api/botController/"
@@ -14,7 +15,7 @@ def send_message(msg, channel):
     print ("sendMessage response >> ", response1)
 
 def invokeBot(user, msg, channel):
-    data = {'user': user, 'messageText': msg, 'messageType': 'text', 'attachment':''}
+    data = {'user': user, 'message': {'messageId': str(uuid.uuid1()), 'messageText': msg, 'messageType': 'text', 'attachments':[]}}
     r = requests.post(url = BOT_ENDPOINT, data = json.dumps(data))
     response =  json.loads(r.text)
     print ("botController response >> ", response)

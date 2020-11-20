@@ -31,6 +31,34 @@ def translate_message(j):
         messageType = 'plaintext'
         attachments = []
 
+        seq = 1
+        for n in j['message']['blocks']:
+            if n['type'] == 'section' and n['accessory']['type'] in ['static_select', 'datepicker', 'checkboxes']:
+                options = []
+                optionSelected = []
+                attachmentId = n['accessory']['action_id']
+                attachmentSeq = seq
+                attachmentDesc = n['text']['text']
+                if n['accessory']['type'] == 'static_select':
+                    attachmentType = 'dropdown'
+                    optionSelected.append({'value': j['state']['values'][messageId][attachmentId]['selected_option']['value']})
+                elif n['accessory']['type'] == 'datepicker':
+                    attachmentType = 'datepicker'
+                    optionSelected.append({'value': j['state']['values'][messageId][attachmentId]['selected_date']})
+                elif n['accessory']['type'] == 'checkboxes':
+                    attachmentType = 'checkbox'
+                if n['accessory']['type'] != 'datepicker':
+                    for o in n['accessory']['options']:
+                        opt = {'value': o['value']}
+                        options.append(opt)
+                
+                atc = {'attachmentId': attachmentId, 'attachmentSeq': attachmentSeq, 'attachmentDesc': attachmentDesc,
+                'attachmentType': attachmentType, 'options': options, 'optionSelected': optionSelected
+                }
+                attachments.append(atc)
+                seq = seq+1
+
+
         msg = {'user':user, 'message': {
             'messageId': messageId, 'messageText': messageText, 'messageType': messageType,
             'attachments':attachments

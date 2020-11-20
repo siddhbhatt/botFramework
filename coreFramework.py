@@ -44,17 +44,21 @@ class block(metadata):
         pass
 
     def getVariables(self):
+        """
         getVariable=None
         for getVar in self.botdata['journey']:
             for xgetVar in getVar['blocks']:
                 if getVar.get('journeyName') == journeyName and xgetVar.get('blockSeq') == blockSeq:
                     getVariable=xgetVar.get('getVariables')
         return getVariable
+        """
+        pass
 
     def mapInput(self):
         pass
 
     def applyRules(self):
+        """
         applyRules=None
         for getVar in self.botdata['journey']:
             for xgetVar in getVar['blocks']:
@@ -68,6 +72,8 @@ class block(metadata):
                 return True    
         else:
             return True
+        """
+        return True
 
     def callAPI(self, journeyName, blockName, **kwargs):
         for a in self.botdata['journey']:

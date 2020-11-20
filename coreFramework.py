@@ -44,13 +44,30 @@ class block(metadata):
         pass
 
     def getVariables(self):
-        pass
+        getVariable=None
+        for getVar in self.botdata['journey']:
+            for xgetVar in getVar['blocks']:
+                if getVar.get('journeyName') == journeyName and xgetVar.get('blockSeq') == blockSeq:
+                    getVariable=xgetVar.get('getVariables')
+        return getVariable
 
     def mapInput(self):
         pass
 
     def applyRules(self):
-        return True
+        applyRules=None
+        for getVar in self.botdata['journey']:
+            for xgetVar in getVar['blocks']:
+                if getVar.get('journeyName') == journeyName and xgetVar.get('blockSeq') == blockSeq:
+                    applyRules=xgetVar.get('rules')
+        print(InputMsg,applyRules)
+        if InputMsg is not None:
+            if InputMsg not in applyRules['message']:
+                return False
+            else:
+                return True    
+        else:
+            return True
 
     def callAPI(self, journeyName, blockName, **kwargs):
         for a in self.botdata['journey']:
@@ -240,4 +257,3 @@ class sessionManager(block):
             self.setVariables()
             result = self.sendReponse(block['journeyName'], block['blockName'], response)
             return result
-

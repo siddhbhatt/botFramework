@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+<title>b4b</title>
+</head>
+<html>
+  <body>
+  <h1>Welcome to B4B</h1>
+<div>
+<p>Please select a Domain:</p>
+<form action="{{ url_for('submit') }}" method="post">
+    <label for="db">Choose a Domain:</label>
+    <select name="db" id="db">
+      <option value="">..</option>
+      <option value="bookcab">A Cab Booking ChatBot</option>
+      <option value="bookhotel">A Hotel Booking ChatBot</option>
+    </select>
+    <br><br>
+    <input type="submit" name="action" value="Load Template"></input>
+  </form>
+  </div><br/>
+ 
+    
+</body>
+  </html>

@@ -53,7 +53,7 @@ def translate_message(j):
                         options.append(opt)
                 
                 atc = {'attachmentId': attachmentId, 'attachmentSeq': attachmentSeq, 'attachmentDesc': attachmentDesc,
-                'attachmentType': attachmentType, 'options': options, 'optionSelected': optionSelected
+                'attachmentType': attachmentType, 'options': options, 'optionsSelected': optionSelected
                 }
                 attachments.append(atc)
                 seq = seq+1

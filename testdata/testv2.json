@@ -14,7 +14,7 @@
                     {"value": "kolkata"},
                     {"value": "bangalore"}
                 ],
-                "optionsSelected":[]
+                "optionsSelected":[{"value": "kolkata"}]
 
             },
             {

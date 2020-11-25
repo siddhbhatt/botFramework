@@ -4,12 +4,18 @@ import os
 logpath = 'C:/Users/SIDDHARTHABHATTACHAR/Documents/Copy/MachineLearning/sampleProjects/logbotFramework/'
 
 
-processes = [[['python', 'botController.py'], 'botController_out.log', 'botController_err.log'],
-[['python', './apis/intentController.py'], 'intentController_out.log', 'intentController_err.log'],
-[['python', './apis/test/cities.py'], 'cities_out.log', 'cities_err.log']]
+processes = [[['python', 'botController.py'], 'botController.log'],
+[['python', './apis/intentController.py'], 'intentController.log'],
+[['python', './apis/test/cities.py'], 'cities.log'],
+[['python', './channelAdapters/slack/rtmclient.py'], 'rtmclient.log'],
+[['python', './channelAdapters/slack/sendmessage.py'], 'sendmessage.log'],
+[['python', './channelAdapters/slack/interact.py'], 'interact.log']]
 
+for n in processes:
+    with open (logpath+n[1], 'w') as logfile:
+        logfile.flush()
+        plist = [Popen(n[0], stdout=logfile, stderr=logfile)]
 
-plist = [Popen(n[0], stdout=PIPE, stderr=PIPE) for n in processes]
 try:
     for proc in plist:
         proc.wait()

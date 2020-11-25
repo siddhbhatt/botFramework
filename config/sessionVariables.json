@@ -1,0 +1,14 @@
+[
+    {
+        "sessionId": "abc123",
+        "userId": "sidd",
+        "journeyName": "bookcab",
+        "blockName": "get_date",
+        "sessionVariables": [
+            {
+                "cityName": "Kolkata",
+                "scope": "global"
+            }
+        ]
+    }
+]

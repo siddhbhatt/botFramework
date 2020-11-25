@@ -8,6 +8,7 @@ import re
 
 #Path variables
 SESSION_PATH = 'config/session.json'
+SESVARIABLE_PATH = 'config/sessionVariables.json'
 BOTCONFIG_PATH = 'config/bot_booking.json'
 INTENT_ENDPOINT = "http://127.0.0.1:2005/api/intentController/"
 
@@ -19,9 +20,14 @@ class metadata:
         session = json.load(open(SESSION_PATH))
     except Exception as e:
         session = []
+    try:
+        sesVariables = json.load(open(SESVARIABLE_PATH))
+    except Exception as e:
+        sesVariables = []
     
     def __init__(self):
         self.session = metadata.session
+        self.sesVariables = metadata.sesVariables
 
     def saveSession(self):
         # saves session list into disk
@@ -30,6 +36,35 @@ class metadata:
 
     def deleteSession(self, sessionId):
         self.session = [i for i in self.session if not (i['sessionId'] == sessionId)]
+        self.sesVariables = [i for i in self.sesVariables if not (i['sessionId'] == sessionId)]
+
+    def upsertSesVariables(self, inputDict):
+        match = 0
+        for n in self.sesVariables:
+            if isinstance(n, dict) and n['sessionId'] == inputDict['sessionId']:
+                n['sessionVariables'] = n['sessionVariables'] + inputDict['sessionVariables']
+                n['journeyName'] = inputDict['journeyName']
+                n['blockName'] = inputDict['blockName']
+                match = 1
+
+        if match == 0:
+            self.sesVariables.append(inputDict)
+
+        print("debug line from upsertSesVariables - sesVariables = ", self.sesVariables)
+
+    def querySesVariables(self, varList, sessionId, journeyName):
+        ret = []
+        for a in varList:
+            for b in self.sesVariables:
+                if b['sessionId'] == sessionId:
+                    for c in b['sessionVariables']:
+                        if a in c.keys():
+                            if (c['scope'] == 'local' and b['journeyName'] == journeyName) or c['scope'] == 'global':
+                                x = {a: c[a]}
+                                ret.append(x)
+        
+        return ret
+    
 
 #Block class
 class block(metadata):
@@ -43,19 +78,39 @@ class block(metadata):
         #receive and parse the input message
         pass
 
-    def getVariables(self):
-        """
+    def getVariables(self, journeyName, blockName, sessionId):
         getVariable=None
-        for getVar in self.botdata['journey']:
-            for xgetVar in getVar['blocks']:
-                if getVar.get('journeyName') == journeyName and xgetVar.get('blockSeq') == blockSeq:
-                    getVariable=xgetVar.get('getVariables')
-        return getVariable
-        """
-        pass
+        #print("debug line from getVariables - i am here and sessionId = ", sessionId)
+        for a in self.botdata['journey']:
+            if a['journeyName'] == journeyName:
+                for b in a['blocks']:
+                    if b['blockName'] == blockName:
+                        getVariable=b['getVariables']
+                        #print("debug line from getVariables - getVariable = ", getVariable)
+        
+        if getVariable:
+            res = self.querySesVariables(getVariable, sessionId, journeyName)
+            print("debug line from getVariables - res = ", res)
+            return res
+        else:
+            return []
 
-    def mapInput(self):
-        pass
+    def getInput(self, journeyName, blockName, msg):
+        for a in self.botdata['journey']:
+            if a['journeyName'] == journeyName:
+                for b in a['blocks']:
+                    if b['blockName'] == blockName:
+                        if b['type'] == 'input':
+                            map = b['inputMapping']
+                        else:
+                            return []
+
+        if len(map)>0:
+            out = self.mapping(map, msg)
+            print("debug line from getInput - out = ", out)
+            return out
+        else:
+            return []
 
     def applyRules(self):
         """
@@ -126,7 +181,7 @@ class block(metadata):
                 lt.append(v)
         return lt
 
-    def mapping(self, map, input):
+    def mapping(self, map, inp):
         out=[]
         
         for xmap in map:
@@ -135,7 +190,7 @@ class block(metadata):
                     for k, v in value.items():
                         lt = []
                         if k == 'path':
-                            x = pd.json_normalize(input, v).to_dict()
+                            x = pd.json_normalize(inp, v).to_dict()
                             r = self.iterdict(x, lt)
                             if value['outputFormat'] == 'item' and len(r)==1:
                                 d = {value['name']: r[0]}
@@ -159,25 +214,35 @@ class block(metadata):
             fixedList.append(json.loads(n))
         return fixedList
     
-    def resolveVariables(self, x, response):
-        if isinstance(x, list) and x:
+    def resolveVariables(self, inp, lookup, symbol):
+        if isinstance(inp, list) and inp:
             out =[]
-            for n in x:
+            for n in inp:
                 #print ("Debug line - n = ", n)
-                from_api = re.search('\@(.*)\@', str(n))
-                if from_api:
-                    for a in response:
+                match = re.search(symbol + '(.*)' + symbol, str(n))
+                if match and lookup:
+                    for a in lookup:
                         if isinstance(a,dict):
                             for k,v in a.items():
-                                if k == from_api.group(1):
+                                if k == match.group(1):
                                     if isinstance(v,list):
                                         out = out + v
                                     else:
                                         out.append(v)
+        elif isinstance(inp, str):
+            out = inp
+            matches = re.findall(symbol + '(.+?)' + symbol, out)
+            if matches and lookup:
+                for p in matches:
+                    for q in lookup:
+                        if p in q.keys():
+                            new = q[p]
+                            old = symbol + p + symbol
+                            out = out.replace(old, new)
 
         return out
 
-    def sendReponse(self, journeyName, blockName, r):
+    def sendReponse(self, journeyName, blockName, api, inp, var):
         #response = {}
         for p in self.botdata['journey']:
             if p['journeyName'] == journeyName:
@@ -188,16 +253,41 @@ class block(metadata):
         #print ("debug line - response = ", response)
         for i in response['message']['attachments']:
             #print("debug line - i = ", i)
-            if i['options'] and r:
-                x = self.resolveVariables(i['options'], r)
+            if i['options'] and api:
+                x = self.resolveVariables(i['options'], api, '@')
                 if x:
                     i['options'] = x
 
+        a = self.resolveVariables(response['message']['messageText'], api, '@')
+        b = self.resolveVariables(a, inp, '#')
+        c = self.resolveVariables(b, var, '%')
+        response['message']['messageText'] = c
         
         return response
 
-    def setVariables(self):
-        pass
+    def setVariables(self, journeyName, blockName, sessionId, userId, inp):
+        for p in self.botdata['journey']:
+            if p['journeyName'] == journeyName:
+                for q in p['blocks']:
+                    if q['blockName'] == blockName:
+                        if len(q['setVariables']) > 0:
+                            vlist = q['setVariables']
+                        else:
+                            return
+        
+        svs = []
+        for a in vlist:
+            for key, val in a.items():
+                if key == 'value':
+                    rvalue = self.resolveVariables(val, inp, '#')
+                    sv = {a['variableName']: rvalue, 'scope': a['scope']}
+                    svs.append(sv)
+        updDict = {'sessionId': sessionId, 'userId': userId, 'journeyName': journeyName, 
+        'blockName': blockName, 'sessionVariables': svs}
+        print("debug line from setVariables - updDict = ", updDict)
+        self.upsertSesVariables(updDict)
+
+        return
 
     def getNext(self, journeyName, **kwargs):
         next = []
@@ -254,12 +344,16 @@ class sessionManager(block):
             print(e)
         return intent
 
-    def executeBlock(self, block):
-        self.getVariables()
-        self.mapInput()
+    def executeBlock(self, block, msg, **kwargs):
+        if 'sessionId' in kwargs:
+            var = self.getVariables(block['journeyName'], block['blockName'], kwargs['sessionId'])
+        else:
+            var = []
+        mappedInput = self.getInput(block['journeyName'], block['blockName'], msg)
         check = self.applyRules()
         if check:
-            response = self.callAPI(block['journeyName'], block['blockName'])
-            self.setVariables()
-            result = self.sendReponse(block['journeyName'], block['blockName'], response)
+            mappedResponse = self.callAPI(block['journeyName'], block['blockName'])
+            if 'sessionId' in kwargs:
+                self.setVariables(block['journeyName'], block['blockName'], kwargs['sessionId'], kwargs['userId'], mappedInput)
+            result = self.sendReponse(block['journeyName'], block['blockName'], mappedResponse, mappedInput, var)
             return result

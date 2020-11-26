@@ -12,22 +12,45 @@ SESVARIABLE_PATH = 'config/sessionVariables.json'
 BOTCONFIG_PATH = 'config/bot_booking.json'
 INTENT_ENDPOINT = "http://127.0.0.1:2005/api/intentController/"
 
-#Metadata class
-class metadata:
-    intentendpoint = INTENT_ENDPOINT
-    botdata = json.load(open(BOTCONFIG_PATH))
+#Session class
+class Session:
     try:
         session = json.load(open(SESSION_PATH))
-    except Exception as e:
+    except OSError:
         session = []
     try:
         sesVariables = json.load(open(SESVARIABLE_PATH))
-    except Exception as e:
+    except OSError:
         sesVariables = []
     
     def __init__(self):
-        self.session = metadata.session
-        self.sesVariables = metadata.sesVariables
+        self.session = Session.session
+        self.sesVariables = Session.sesVariables
+
+    def getSession(self, user):
+        #return sessionId, JourneyName, blockName
+        currSession = {}
+        for i in self.session:
+            if i['userId'] == user:
+                currSession = i
+        return currSession
+
+    def createSession(self, user, journeyName, blockName, blockSeq):
+        sessionId = str(uuid.uuid1())
+        startTS = time.time()
+        self.session.append({'sessionId': sessionId, 'userId': user, 
+        'journeyName': journeyName, 'blockName': blockName, 'blockSeq': blockSeq,
+        'startTS': startTS})
+        return sessionId, startTS
+
+    def updateSession(self, user, journeyName, blockName, blockSeq):
+        startTS = time.time()
+        for i in self.session:
+            if i['userId'] == user:
+                sessionId = i['sessionId']
+                i.update({'journeyName': journeyName, 'blockName': blockName, 'blockSeq': blockSeq,
+                'startTS': startTS})
+        return sessionId, startTS
 
     def saveSession(self):
         # saves session list into disk
@@ -67,16 +90,11 @@ class metadata:
     
 
 #Block class
-class block(metadata):
+class Block(Session):
+    botdata = json.load(open(BOTCONFIG_PATH))
+    
     def __init__(self):
-        self.session = super().session
-        self.botdata = super().botdata
-        self.intentendpoint = super().intentendpoint
-
-
-    def getMsg(self):
-        #receive and parse the input message
-        pass
+        self.botdata = Block.botdata
 
     def getVariables(self, journeyName, blockName, sessionId):
         getVariable=None
@@ -160,7 +178,7 @@ class block(metadata):
                     else:
                         payload = payload.update(p)
                 
-            exStr = 'block.foo = lambda self: requests.get(url="' + str(api['endpoint']) + '", params=' + json.dumps(payload) +')'
+            exStr = 'Block.foo = lambda self: requests.get(url="' + str(api['endpoint']) + '", params=' + json.dumps(payload) +')'
             
         elif api['apiType'] == 'POST':
             payload = api['dataMapping']
@@ -314,47 +332,6 @@ class block(metadata):
                             next = [{'journeyName': x['journeyName'], 'blockName': y['blockName']}]
         return next
 
-
-class sessionManager(block):
-    def __init__(self):
-        self.session = super().session
-        self.botdata = super().botdata
-        self.intentendpoint = super().intentendpoint
-        
-    def getSession(self, user):
-        #return sessionId, JourneyName, blockName
-        currSession = {}
-        for i in self.session:
-            if i['userId'] == user:
-                currSession = i
-        return currSession
-    
-    def createSession(self, user, journeyName, blockName, blockSeq):
-        sessionId = str(uuid.uuid1())
-        startTS = time.time()
-        self.session.append({'sessionId': sessionId, 'userId': user, 
-        'journeyName': journeyName, 'blockName': blockName, 'blockSeq': blockSeq,
-        'startTS': startTS})
-        return sessionId, startTS
-
-    def updateSession(self, user, journeyName, blockName, blockSeq):
-        startTS = time.time()
-        for i in self.session:
-            if i['userId'] == user:
-                sessionId = i['sessionId']
-                i.update({'journeyName': journeyName, 'blockName': blockName, 'blockSeq': blockSeq,
-                'startTS': startTS})
-        return sessionId, startTS
-
-    def getIntent(self, message, **kwargs):
-        intent={}
-        try:
-            r = requests.post(url=self.intentendpoint, data=json.dumps(message))
-            intent = json.loads(r.text)
-        except Exception as e:
-            print(e)
-        return intent
-
     def executeBlock(self, block, msg, **kwargs):
         if 'sessionId' in kwargs:
             var = self.getVariables(block['journeyName'], block['blockName'], kwargs['sessionId'])
@@ -368,3 +345,51 @@ class sessionManager(block):
                 self.setVariables(block['journeyName'], block['blockName'], kwargs['sessionId'], kwargs['userId'], mappedInput)
             result = self.sendReponse(block['journeyName'], block['blockName'], mappedResponse, mappedInput, var)
             return result
+
+class Journey(Block):
+    def __init__(self):
+        self.intentendpoint = INTENT_ENDPOINT
+        self.session = super().session
+        self.botdata = super().botdata
+        
+    def getIntent(self, message, **kwargs):
+        intent={}
+        try:
+            r = requests.post(url=self.intentendpoint, data=json.dumps(message))
+            intent = json.loads(r.text)
+        except Exception as e:
+            print(e)
+        return intent
+
+    def startNewJourney(self, msg, user):
+        jny = self.getIntent(msg['messageText'])
+        next = self.getNext(jny['intent'])
+        n=0
+        res = []
+        for i in next:
+            res.append(self.executeBlock(i, msg))
+            if n==0:
+                _, _ = self.createSession(user, i['journeyName'], i['blockName'], i['blockName'])
+            else:
+                _, _ = self.updateSession(user, i['journeyName'], i['blockName'], i['blockName'])
+            n = n+1
+        return res
+
+    def executeJourney(self, data):
+        response = []
+        ses = self.getSession(data['user'])
+
+        if 'sessionId' in ses:
+            next = self.getNext(ses['journeyName'], blockName=ses['blockName'])
+            if len(next) == 0:
+                self.deleteSession(ses['sessionId'])
+                response = self.startNewJourney(data['message'], data['user'])
+            else:
+                for i in next:
+                    response.append(self.executeBlock(i, data['message'], sessionId=ses['sessionId'], userId=ses['userId']))
+                    _, _ = self.updateSession(ses['userId'], 
+                    i['journeyName'], i['blockName'], i['blockName'])
+        else:
+            response = self.startNewJourney(data['message'], data['user'])
+
+        return response

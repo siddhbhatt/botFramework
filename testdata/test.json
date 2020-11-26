@@ -1,9 +1,0 @@
-{
-    "user": "mani",
-    "message":{
-        "messageId": "m1",
-        "messageText": "Can you book a cab for me?",
-        "messageType": "plaintext",
-        "attachments": []
-    }
-}

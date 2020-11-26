@@ -57,9 +57,11 @@ class Session:
         with open(self.sessionpath, "w") as outfile:
             json.dump(self.session, outfile)
 
-    def deleteSession(self, sessionId):
-        self.session = [i for i in self.session if not (i['sessionId'] == sessionId)]
-        self.sesVariables = [i for i in self.sesVariables if not (i['sessionId'] == sessionId)]
+    def deleteSession(self, user):
+        self.session = [i for i in self.session if not (i['userId'] == user)]
+        self.sesVariables = [i for i in self.sesVariables if not (i['userId'] == user)]
+        print("debug line from deleteSession - session = ", self.session)
+        print("debug line from deleteSession - sesVariables = ", self.sesVariables)
 
     def upsertSesVariables(self, inputDict):
         match = 0
@@ -131,7 +133,7 @@ class Block(Session):
             return []
 
     def applyRules(self, journeyName, blockName, inp, var):
-        print("debug line from applyRules - i am here")
+        #print("debug line from applyRules - i am here")
         rules = {}
         check = True
         for a in self.botdata['journey']:
@@ -139,21 +141,21 @@ class Block(Session):
                 for b in a['blocks']:
                     if b['blockName'] == blockName and b['rules']:
                         rules = b['rules']
-                        print("debug line from applyRules - rules = ", rules)
+                        #print("debug line from applyRules - rules = ", rules)
         
         if rules:   
             for n in rules['oneOf']:
                 for k, v in n.items():
                     inp_r = self.resolveVariables(k, inp, '#')
                     var_r = self.resolveVariables(inp_r, var, '%')
-                    print("debug line from applyRules - var_r = ", var_r, " v = ", v)
+                    #print("debug line from applyRules - var_r = ", var_r, " v = ", v)
                     if var_r == v:
                         check = True
                     else:
                         check = False
                         break
 
-                print("debug line from applyRules - check = ", check)
+                #print("debug line from applyRules - check = ", check)
                 if check == True:
                     return check
  
@@ -261,6 +263,7 @@ class Block(Session):
         elif isinstance(inp, str):
             out = inp
             matches = re.findall(symbol + '(.+?)' + symbol, out)
+            print("Debug line from resolveVariables - matches = ", matches)
             if matches and lookup:
                 for p in matches:
                     for q in lookup:
@@ -272,7 +275,7 @@ class Block(Session):
         return out
 
     def sendReponse(self, journeyName, blockName, api, inp, var):
-        #response = {}
+        response = {}
         for p in self.botdata['journey']:
             if p['journeyName'] == journeyName:
                 for q in p['blocks']:
@@ -286,11 +289,16 @@ class Block(Session):
                 x = self.resolveVariables(i['options'], api, '@')
                 if x:
                     i['options'] = x
-
-        a = self.resolveVariables(response['message']['messageText'], api, '@')
+        print("debug line from sendResponse - api = ", api)
+        print("debug line from sendResponse - inp = ", inp)
+        print("debug line from sendResponse - var = ", var)
+        pp = response['message']['messageText']
+        print("debug line from sendResponse - messageText = ", response['message']['messageText'])
+        a = self.resolveVariables(pp, api, '@')
         b = self.resolveVariables(a, inp, '#')
         c = self.resolveVariables(b, var, '%')
         response['message']['messageText'] = c
+        print("debug line from sendResponse - response = ", response)
         
         return response
 
@@ -326,7 +334,7 @@ class Block(Session):
                     if 'blockName' in kwargs:
                         if y['blockName'] == kwargs['blockName']:
                             next = y['next']
-                            print ("next >>", next)
+                            #print ("next >>", next)
                     else:
                         if y['blockSeq'] == 1:
                             next = [{'journeyName': x['journeyName'], 'blockName': y['blockName']}]
@@ -358,10 +366,11 @@ class Journey(Block):
             r = requests.post(url=self.intentendpoint, data=json.dumps(message))
             intent = json.loads(r.text)
         except Exception as e:
-            print(e)
+            print("Error from getIntent - ", e)
         return intent
 
     def startNewJourney(self, msg, user):
+        self.deleteSession(user)
         jny = self.getIntent(msg['messageText'])
         next = self.getNext(jny['intent'])
         n=0
@@ -382,7 +391,7 @@ class Journey(Block):
         if 'sessionId' in ses:
             next = self.getNext(ses['journeyName'], blockName=ses['blockName'])
             if len(next) == 0:
-                self.deleteSession(ses['sessionId'])
+                #self.deleteSession(ses['sessionId'])
                 response = self.startNewJourney(data['message'], data['user'])
             else:
                 for i in next:

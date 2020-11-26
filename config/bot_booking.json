@@ -1,22 +1,20 @@
 {
-	"botName": "mybot",
+	"botName": "TestBot2",
 	"intents": [{
 			"patterns": ["I want to book a cab", "book my cab", "get me taxi", "book a car"],
-			"journeyName": "bookcab",
-			"inputMapping": {
-				"data": "message",
-				"channel": "cabbookchannel",
-				"user": "Sidd"
-			}
+			"journeyName": "bookcab"
 		},
 		{
-			"patterns": ["I want to book a hotel", "book my hotel"],
-			"journeyName": "bookhotel",
-			"inputMapping": {
-				"data": "message",
-				"channel": "hostelbookchannel",
-				"user": "Sidd"
-			}
+			"patterns": ["Hi there", "How are you", "Is anyone there?", "Hey", "Hello", "Good day"],
+			"journeyName": "greeting"
+		},
+		{
+			"patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+			"journeyName": "goodbye"
+		},
+		{
+			"patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
+			"journeyName": "options"
 		}
 	],
 	"journey": [{
@@ -38,22 +36,7 @@
 						"dataMapping": {},
 						"outputMapping": [
 							{
-								"map": {"name": "out1", "path": ["country","name"], "outputFormat": "item"}
-							},
-							{
 								"map": {"name": "out2", "path": ["country","states","cities"], "outputFormat": "jsonarray", "outputTag": "value"}
-							},
-							{
-								"map": {"name": "out3", "path": ["country","states","name"], "outputFormat": "arrayitem"}
-							},
-							{
-								"map": {"name": "out4", "path": ["country","states","county","name"], "outputFormat": "arrayitem"}
-							},
-							{
-								"map": {"name": "out5", "path": ["continent"], "outputFormat": "item"}
-							},
-							{
-								"map": {"name": "out6", "path": ["country", "states", "ward", "no"], "outputFormat": "arrayitem"}
 							}
 						]
 					},
@@ -202,61 +185,15 @@
 			]
 		},
 		{
-			"journeyName": "bookhotel",
-			"blocks": [{
+			"journeyName": "greeting",
+			"blocks": [
+				{
 					"blockSeq": 1,
-					"blockName": "entry_msg",
+					"blockName": "wish",
 					"type": "output",
 					"getVariables": [],
-					"inputMapping": {},
-					"rules": [],
-					"api": {
-						"apiType": "GET",
-						"endpoint": "/getcities",
-						"params": [{
-							"key": "country",
-							"value": "india"
-						}],
-						"dataMapping": {},
-						"outputMapping": {
-							"attachment": "response.text",
-							"status": "response.status",
-							"confirmationId": "response.text[confirmationId]"
-						}
-					},
-					"output": {
-						"message": "Sure,Please provide the city",
-						"messageType": "dropdown",
-						"attachemnt": "attachment",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
-					},
-					"setVariables": [{
-						"entity": null,
-						"scope": "global/local",
-						"variables": [{
-							"variableName": null,
-							"value": null,
-							"scope": "global/local"
-						}]
-
-					}],
-					"next": [{
-						"journeyName": "bookhotel",
-						"blockName": "getdate"
-					}]
-				},
-				{
-					"blockSeq": 2,
-					"blockName": "getdate",
-					"type": "input",
-					"getVariables": [],
-					"inputMapping": {
-						"data": "attachment[options]",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
-					},
-					"rules": [],
+					"inputMapping": [],
+					"rules": {},
 					"api": {
 						"apiType": "",
 						"endpoint": "",
@@ -265,88 +202,105 @@
 							"value": ""
 						}],
 						"dataMapping": {},
-						"outputMapping": {
-							"attachment": ""
-						}
+						"outputMapping": {}
 					},
 					"output": {
-						"message": "Please Select the Date",
-						"messageType": "dateTimePicker()",
-						"attachemnt": "",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
+						"message":{
+							"messageId": "m5",
+							"messageText": "Hello there",
+							"messageType": "plaintext",
+							"attachments": [{
+									"attachmentId": null,
+									"atachmentSeq": null,
+									"attachmentDesc": null,
+									"attachmentType": null,
+									"options": []
+								}]
+						}
 					},
-					"setVariables": [{
-						"entity": "city",
-						"scope": "global",
-						"variables": [{
-							"variableName": "cityName",
-							"value": "data",
-							"scope": "global"
-						}]
-					}],
-					"next": [{
-						"journeyName": "bookhotel",
-						"blockName": "confirmbooking"
-					}]
-				},
+					"setVariables": [],
+					"next": []
+				}
+			]
+		},
+		{
+			"journeyName": "goodbye",
+			"blocks": [
 				{
-					"blockSeq": 3,
-					"blockName": "confirmbooking",
-					"type": "input",
-					"getVariables": ["city.cityName"],
-					"inputMapping": {
-						"data": "{date:dataPicker().date(),time:dataPicker().time()}",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
-					},
-					"rules": [],
+					"blockSeq": 1,
+					"blockName": "wish",
+					"type": "output",
+					"getVariables": [],
+					"inputMapping": [],
+					"rules": {},
 					"api": {
-						"apiType": "POST",
-						"endpoint": "/confirmBooking",
+						"apiType": "",
+						"endpoint": "",
 						"params": [{
 							"key": "",
 							"value": ""
 						}],
-						"dataMapping": {
-							"city": "city.cityName",
-							"date": "data[date]",
-							"time": "time[time]"
-						},
-						"outputMapping": {
-							"attachment": "",
-							"status": "response.status",
-							"confirmationId": "response.text[confirmationId]"
-						}
+						"dataMapping": {},
+						"outputMapping": {}
 					},
 					"output": {
-						"message": "Your Cab Booking is Confirmed,your Confirmation id:{confirmationId}",
-						"messageType": "text",
-						"attachemnt": "",
-						"channel": "cabbookchannel",
-						"user": "Sidd"
+						"message":{
+							"messageId": "m6",
+							"messageText": "Thanks, see you soon!",
+							"messageType": "plaintext",
+							"attachments": [{
+									"attachmentId": null,
+									"atachmentSeq": null,
+									"attachmentDesc": null,
+									"attachmentType": null,
+									"options": []
+								}]
+						}
 					},
-					"setVariables": [{
-						"entity": "date",
-						"scope": "global",
-						"variables": [{
-								"variableName": "date",
-								"value": "data[date]",
-								"scope": "global"
-							},
-							{
-								"variableName": "time",
-								"value": "data[time]",
-								"scope": "global"
-							}
-						]
-					}],
-					"next": [{
-						"journeyName": "bookhotel",
-						"blockName": ""
-					}]
+					"setVariables": [],
+					"next": []
+				}
+			]
+		},
+		{
+			"journeyName": "options",
+			"blocks": [
+				{
+					"blockSeq": 1,
+					"blockName": "listofservices",
+					"type": "output",
+					"getVariables": [],
+					"inputMapping": [],
+					"rules": {},
+					"api": {
+						"apiType": "",
+						"endpoint": "",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {}
+					},
+					"output": {
+						"message":{
+							"messageId": "m7",
+							"messageText": "I can help you book a cab",
+							"messageType": "plaintext",
+							"attachments": [{
+									"attachmentId": null,
+									"atachmentSeq": null,
+									"attachmentDesc": null,
+									"attachmentType": null,
+									"options": []
+								}]
+						}
+					},
+					"setVariables": [],
+					"next": []
 				}
 			]
 		}
+		
 	]
 }

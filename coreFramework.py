@@ -112,23 +112,34 @@ class block(metadata):
         else:
             return []
 
-    def applyRules(self):
-        """
-        applyRules=None
-        for getVar in self.botdata['journey']:
-            for xgetVar in getVar['blocks']:
-                if getVar.get('journeyName') == journeyName and xgetVar.get('blockSeq') == blockSeq:
-                    applyRules=xgetVar.get('rules')
-        print(InputMsg,applyRules)
-        if InputMsg is not None:
-            if InputMsg not in applyRules['message']:
-                return False
-            else:
-                return True    
-        else:
-            return True
-        """
-        return True
+    def applyRules(self, journeyName, blockName, inp, var):
+        print("debug line from applyRules - i am here")
+        rules = {}
+        check = True
+        for a in self.botdata['journey']:
+            if a['journeyName'] == journeyName:
+                for b in a['blocks']:
+                    if b['blockName'] == blockName and b['rules']:
+                        rules = b['rules']
+                        print("debug line from applyRules - rules = ", rules)
+        
+        if rules:   
+            for n in rules['oneOf']:
+                for k, v in n.items():
+                    inp_r = self.resolveVariables(k, inp, '#')
+                    var_r = self.resolveVariables(inp_r, var, '%')
+                    print("debug line from applyRules - var_r = ", var_r, " v = ", v)
+                    if var_r == v:
+                        check = True
+                    else:
+                        check = False
+                        break
+
+                print("debug line from applyRules - check = ", check)
+                if check == True:
+                    return check
+ 
+        return check
 
     def callAPI(self, journeyName, blockName, **kwargs):
         for a in self.botdata['journey']:
@@ -350,7 +361,7 @@ class sessionManager(block):
         else:
             var = []
         mappedInput = self.getInput(block['journeyName'], block['blockName'], msg)
-        check = self.applyRules()
+        check = self.applyRules(block['journeyName'], block['blockName'], mappedInput, var)
         if check:
             mappedResponse = self.callAPI(block['journeyName'], block['blockName'])
             if 'sessionId' in kwargs:

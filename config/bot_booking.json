@@ -158,6 +158,45 @@
 						"variableName": "date",
 						"value": "#date#",
 						"scope": "local"}],
+					"next": [{
+						"journeyName": "bookcab",
+						"blockName": "confirmbooking"
+					}]
+				},
+				{
+					"blockSeq": 4,
+					"blockName": "confirmbooking",
+					"type": "input",
+					"getVariables": ["cityName", "date"],
+					"inputMapping": [{"map": {"name": "selection", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
+					"rules": {
+						"oneOf":[{"#selection#":"Yes"}]
+					},
+					"api": {
+						"apiType": "",
+						"endpoint": "",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {}
+					},
+					"output": {
+						"message":{
+							"messageId": "m4",
+							"messageText": "Thanks, your booking confirmation id is 123",
+							"messageType": "plaintext",
+							"attachments": [{
+									"attachmentId": null,
+									"atachmentSeq": null,
+									"attachmentDesc": null,
+									"attachmentType": null,
+									"options": []
+								}]
+						}
+					},
+					"setVariables": [],
 					"next": []
 				}
 			]

@@ -33,7 +33,7 @@ def translate_message(j):
 
         seq = 1
         for n in j['message']['blocks']:
-            if n['type'] == 'section' and n['accessory']['type'] in ['static_select', 'datepicker', 'checkboxes']:
+            if n['type'] == 'section' and 'accessory' in n.keys() and n['accessory']['type'] in ['static_select', 'datepicker', 'checkboxes']:
                 options = []
                 optionSelected = []
                 attachmentId = n['accessory']['action_id']
@@ -57,7 +57,26 @@ def translate_message(j):
                 }
                 attachments.append(atc)
                 seq = seq+1
-
+            elif n['type'] == 'actions':
+                attachmentId = n['block_id']
+                attachmentSeq = seq
+                attachmentDesc = ''
+                attachmentType = 'button'
+                options = []
+                for o in n['elements']:
+                    if o['type'] == 'button':
+                        e = {'value':o['value']}
+                        options.append(e)
+                optionSelected = []
+                for s in j['actions']:
+                    if s['block_id'] == attachmentId:
+                        t = {'value':s['value']}
+                        optionSelected.append(t)
+                atc = {'attachmentId': attachmentId, 'attachmentSeq': attachmentSeq, 'attachmentDesc': attachmentDesc,
+                'attachmentType': attachmentType, 'options': options, 'optionsSelected': optionSelected
+                }
+                attachments.append(atc)
+                seq = seq + 1
 
         msg = {'user':user, 'message': {
             'messageId': messageId, 'messageText': messageText, 'messageType': messageType,
@@ -78,8 +97,9 @@ def invoke_bot(msg, channel):
     response =  json.loads(r.text)
     print ("botController response >> ", response)
     
+        
     for res in response:
-        if 'message' in res:
+        if res and 'message' in res:
             send_message(res['message'], channel)
     return
 

@@ -263,7 +263,7 @@ class Block(Session):
         elif isinstance(inp, str):
             out = inp
             matches = re.findall(symbol + '(.+?)' + symbol, out)
-            print("Debug line from resolveVariables - matches = ", matches)
+            #print("Debug line from resolveVariables - matches = ", matches)
             if matches and lookup:
                 for p in matches:
                     for q in lookup:
@@ -275,32 +275,26 @@ class Block(Session):
         return out
 
     def sendReponse(self, journeyName, blockName, api, inp, var):
-        response = {}
         for p in self.botdata['journey']:
             if p['journeyName'] == journeyName:
                 for q in p['blocks']:
                     if q['blockName'] == blockName:
-                        response = q['output']
+                        output = q['output'].copy()
 
         #print ("debug line - response = ", response)
-        for i in response['message']['attachments']:
+        for i in output['message']['attachments']:
             #print("debug line - i = ", i)
             if i['options'] and api:
                 x = self.resolveVariables(i['options'], api, '@')
                 if x:
                     i['options'] = x
-        print("debug line from sendResponse - api = ", api)
-        print("debug line from sendResponse - inp = ", inp)
-        print("debug line from sendResponse - var = ", var)
-        pp = response['message']['messageText']
-        print("debug line from sendResponse - messageText = ", response['message']['messageText'])
-        a = self.resolveVariables(pp, api, '@')
+        
+        a = self.resolveVariables(output['message']['messageText'], api, '@')
         b = self.resolveVariables(a, inp, '#')
         c = self.resolveVariables(b, var, '%')
-        response['message']['messageText'] = c
-        print("debug line from sendResponse - response = ", response)
+        output['message']['messageText'] = c
         
-        return response
+        return output
 
     def setVariables(self, journeyName, blockName, sessionId, userId, inp):
         for p in self.botdata['journey']:
@@ -371,6 +365,7 @@ class Journey(Block):
 
     def startNewJourney(self, msg, user):
         self.deleteSession(user)
+        self.botdata = json.load(open(BOTCONFIG_PATH))
         jny = self.getIntent(msg['messageText'])
         next = self.getNext(jny['intent'])
         n=0

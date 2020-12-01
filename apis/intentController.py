@@ -8,10 +8,10 @@ from flask import Flask, request, jsonify
 import random
 
 from tensorflow.keras.models import load_model
-model = load_model("models/primaryintent_model.h5")
+model = load_model("models/intents/primaryintent_model.h5")
 #intents = json.loads(open("../config/bot_booking.json"))
-words = pickle.load(open("models/words.pkl",'rb'))
-classes = pickle.load(open("models/classes.pkl",'rb'))
+words = pickle.load(open("models/intents/words.pkl",'rb'))
+classes = pickle.load(open("models/intents/classes.pkl",'rb'))
 
 app = Flask(__name__)
 

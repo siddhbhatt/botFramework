@@ -11,6 +11,7 @@ SESSION_PATH = 'config/session.json'
 SESVARIABLE_PATH = 'config/sessionVariables.json'
 BOTCONFIG_PATH = 'config/bot_booking.json'
 INTENT_ENDPOINT = "http://127.0.0.1:2005/api/intentController/"
+NER_ENDPOINT = 'http://127.0.0.1:2006/api/nerController/'
 
 #Session class
 class Session:
@@ -97,6 +98,7 @@ class Block(Session):
     
     def __init__(self):
         self.botdata = Block.botdata
+        self.nerEndpoint = NER_ENDPOINT
 
     def getVariables(self, journeyName, blockName, sessionId):
         getVariable=None
@@ -126,7 +128,15 @@ class Block(Session):
                             return []
 
         if len(map)>0:
-            out = self.mapping(map, msg)
+            x = [i for i in map if 'map' in i.keys()]
+            y = [i for i in map if 'ner' in i.keys()]
+            out1 = []
+            out2 = []
+            if x:
+                out1 = self.mapping(x, msg)
+            if y:
+                out2 = self.nerMapping(y, msg)
+            out = out1 + out2
             print("debug line from getInput - out = ", out)
             return out
         else:
@@ -237,6 +247,22 @@ class Block(Session):
                                 print("Error from mapping: Invalid mapping")
                             out.append(d)
 
+        return out
+
+    def nerMapping(self, map, inp):
+        out = []
+
+        data = inp['messageText']
+        r = requests.post(url=self.nerEndpoint, data=json.dumps(data))
+        rjson = json.loads(r.text)
+        
+        for xmap in map:
+            for k, v in xmap.items():
+                for ent in rjson:
+                    if v['entity'] in ent.keys() and v['outputFormat'] == 'item':
+                        var = {v['name']: ent[v['entity']]}
+                        out.append(var)
+        print("debug line from nerMapping - out = ", out)
         return out
 
     def fixDtype(self, l):
@@ -351,6 +377,7 @@ class Block(Session):
 class Journey(Block):
     def __init__(self):
         self.intentendpoint = INTENT_ENDPOINT
+        self.nerEndpoint = NER_ENDPOINT
         self.session = super().session
         self.botdata = super().botdata
         

@@ -9,7 +9,8 @@ processes = [[['python', 'botController.py'], 'botController.log'],
 [['python', './apis/test/cities.py'], 'cities.log'],
 [['python', './channelAdapters/slack/rtmclient.py'], 'rtmclient.log'],
 [['python', './channelAdapters/slack/sendmessage.py'], 'sendmessage.log'],
-[['python', './channelAdapters/slack/interact.py'], 'interact.log']]
+[['python', './channelAdapters/slack/interact.py'], 'interact.log'],
+[['python', './apis/nerController.py'], 'nerController.log']]
 
 for n in processes:
     with open (logpath+n[1], 'w') as logfile:

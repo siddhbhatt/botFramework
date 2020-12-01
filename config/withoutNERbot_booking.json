@@ -17,18 +17,6 @@
 			"journeyName": "options"
 		}
 	],
-	"ner":[{
-		"patterns": ["Can you do it at 6:15 pm on 01/12/2020 from Kolkata", "Pick me up from Kolkata"],
-		"entities":[{"keyword":"Kolkata", "name": "CITY"}, {"keyword": "6:15 pm", "name": "TIME"}, {"keyword": "01/12/2020", "name": "DATE"}]
-	},
-	{
-		"patterns": ["Burdawan, 30/11/2020 @ 7:00 am", "Pick me up on 30/11/2020 from Burdawan"],
-		"entities":[{"keyword":"Burdawan", "name": "CITY"}, {"keyword": "7:00 am", "name": "TIME"}, {"keyword": "30/11/2020", "name": "DATE"}]
-	},
-	{
-		"patterns": ["How about in Hyderabad on 02/01/2021 at 8:45pm?", "Want a taxi in Mumbai", "Pick up will be from Delhi airport at 4am"],
-		"entities":[{"keyword":"Hyderabad", "name": "CITY"}, {"keyword": "8:45pm", "name": "TIME"}, {"keyword": "02/01/2021", "name": "DATE"}, {"keyword": "Mumbai", "name": "CITY"}, {"keyword": "Delhi", "name": "CITY"}, {"keyword": "4am", "name": "TIME"}]
-	}],
 	"journey": [{
 			"journeyName": "bookcab",
 			"blocks": [{
@@ -115,14 +103,14 @@
 					}],
 					"next": [{
 						"journeyName": "bookcab",
-						"blockName": "gettime"
+						"blockName": "checkdetails"
 					}]
 				},
 				{
 					"blockSeq": 3,
-					"blockName": "gettime",
+					"blockName": "checkdetails",
 					"type": "input",
-					"getVariables": [],
+					"getVariables": ["cityName"],
 					"inputMapping": [{"map": {"name": "date", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
 					"rules": [],
 					"api": {
@@ -137,48 +125,8 @@
 					},
 					"output": {
 						"message":{
-							"messageId": "m2",
-							"messageText": "Please state time in 12 hour format, for example - 7:30 pm",
-							"messageType": "plaintext",
-							"attachments": [{
-									"attachmentId": null,
-									"atachmentSeq": null,
-									"attachmentDesc": null,
-									"attachmentType": null,
-									"options": []
-								}]
-						}
-					},
-					"setVariables": [{
-						"variableName": "date",
-						"value": "#date#",
-						"scope": "local"}],
-					"next": [{
-						"journeyName": "bookcab",
-						"blockName": "checkdetails"
-					}]
-				},
-				{
-					"blockSeq": 4,
-					"blockName": "checkdetails",
-					"type": "input",
-					"getVariables": ["cityName", "date"],
-					"inputMapping": [ {"ner": {"name": "time", "entity": "TIME", "outputFormat": "item"}}],
-					"rules": [],
-					"api": {
-						"apiType": "",
-						"endpoint": "",
-						"params": [{
-							"key": "",
-							"value": ""
-						}],
-						"dataMapping": {},
-						"outputMapping": {}
-					},
-					"output": {
-						"message":{
 							"messageId": "m3",
-							"messageText": "You selected %cityName% as city and %date% and #time# as date and time. To confirm booking press Yes else No",
+							"messageText": "You selected %cityName% as city and #date# as date. To confirm booking press Yes else No",
 							"messageType": "plaintext",
 							"attachments": [{
 									"attachmentId": "a3",
@@ -199,7 +147,7 @@
 					}]
 				},
 				{
-					"blockSeq": 5,
+					"blockSeq": 4,
 					"blockName": "confirmbooking",
 					"type": "input",
 					"getVariables": ["cityName", "date"],

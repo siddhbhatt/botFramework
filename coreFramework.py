@@ -194,7 +194,7 @@ class Block(Session):
             
         elif api['apiType'] == 'POST':
             payload = api['dataMapping']
-            exStr = 'block.foo = lambda self: requests.post(url="' + str(api['endpoint']) + '", data=' + json.dumps(payload) +')'
+            exStr = 'Block.foo = lambda self: requests.post(url="' + str(api['endpoint']) + '", data=' + json.dumps(payload) +')'
         else:
             return []
             

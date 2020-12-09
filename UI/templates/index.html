@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dynamic NRE - bot4bot</title>
+        <!--Jquery Link-->
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<!-- Bootstrap Styling-->
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	
+	
+	<!-- custom stylesheet-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dynamic.css') }}">
+
+	<!-- custom javascript-->
+	<script type="text/javascript" src="{{ url_for('static', filename='dynamic_index.js') }}"></script>
+
+</head>
+
+<body>
+  
+    <div class="container">
+        <div class="row centered-form">
+            <div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-2 col-md-offset-2">
+                <div class="panel panel-info">
+
+                    <div class="panel-heading text-center">
+                        
+                       
+                    </div>
+
+                    <div class="panel-body">
+                        <form role="form" method="post" action="{{ url_for('submit') }}">
+                            Bot Name:
+                            <input name="botname" type="text" placeholder="Please Enter The Bot Name" class="form-control"/>
+                            <h3 class="panel-title">Add Content for Intents: </h3>
+                            <div class="list_wrapper">  
+                                <div class="row">
+
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+
+                                        <div class="form-group">
+                                            Patterns:
+                                            <input name="IntentsP[0][]" type="text" placeholder="intents Patterns : [text]" class="form-control"/>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-7 col-sm-7 col-md-7">
+                                        <div class="form-group">
+                                            Journey Name:
+                                            <input  name="IntentsJ[0][]" type="text" placeholder="Enter Journey Name" class="form-control"/>
+                                        </div>
+                                    </div> 
+
+                                    <div class="col-xs-1 col-sm-1 col-md-1">
+                                        <br>
+                                       <button class="btn btn-primary list_add_button" type="button">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <input type="submit" value="Submit" class="btn btn-info btn-block">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -33,28 +33,33 @@ def submitfinal():
     fnl=[]
     NREEntries=''
     NRE=''
-    i=0
+    j=0
     print(request.form['intents'])
-    for x,y in request.form.items():
-        print('c>>',x,y)
-        if x[:x.find('[')] == 'NRE' and i==0:
-            NRE=y
-            i=1
-        elif x[:x.find('[')] == 'NREEntries' and i==1:
-            NREEntries=y
-            i=0
+    print('i m here :',request.form['NRE[0][]'])
+    print('game here:',request.form.items())
+    for g in  request.form.items():
+        print('gg',g)
+        print('ggggg',g[0])
+        f=g[0]
+        if f[:f.find('[')] == 'NRE' and j==0:
+            print('help me')
+            NRE=g[1]
+            j=1
+        elif f[:f.find('[')] == 'NREEntries' and j==1:
+            NREEntries=g[1]
+            j=0
         if NRE != '' and NREEntries != '':
             fnl.append({'patterns':NRE,'entities':NREEntries})
             NRE = ''
             NREEntries =''
-
-
-        json_conv=json.dumps({'ner':fnl})
-        print(json_conv)
-        json1=dict(request.form['intents'])
-        val2=request.form['botname']
-        json_conv.update(json1)
+    print('bbbbb>>>>',fnl,type(fnl))        
+    json_conv2={'ner':fnl}
+    json1=json.loads(request.form['intents'])
+    json_conv2.update(json1)
+    json_conv2.update({'botName':request.form['botname']})
+    json_conv2=json.dumps(json_conv2)
+    print('************',json_conv2)
     #return render_template('main.html')
-    return Response(json_conv,headers={'Content-Disposition':'attachment;filename=model.json'})
+    return Response(json_conv2,headers={'Content-Disposition':'attachment;filename=model.json'})
 if __name__ == "__main__":
     app.run(debug = True, host = "0.0.0.0", port = 4040)

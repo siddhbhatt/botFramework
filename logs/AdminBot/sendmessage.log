@@ -1,0 +1,31 @@
+ * Serving Flask app "sendmessage" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 742-439-305
+ * Running on http://127.0.0.1:2015/ (Press CTRL+C to quit)
+127.0.0.1 - - [11/Dec/2020 23:23:16] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:23:26] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:24:05] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:24:26] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:24:43] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:25:50] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:26:34] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:32:36] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:32:38] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:34:11] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [11/Dec/2020 23:41:23] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+section >>  [{'type': 'section', 'block_id': 'm5', 'text': {'type': 'mrkdwn', 'text': 'Hello there'}}]
+section >>  [{'type': 'section', 'block_id': 'm6', 'text': {'type': 'mrkdwn', 'text': 'Thanks, see you soon!'}}]
+section >>  [{'type': 'section', 'block_id': 'm5', 'text': {'type': 'mrkdwn', 'text': 'Hello there'}}]
+section >>  [{'type': 'section', 'block_id': 'm7', 'text': {'type': 'mrkdwn', 'text': 'I can help you build a bot'}}]
+section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please specify name of the bot. Please note bot name should be unique and should not have any spaces.'}}]
+section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Please specify the pupose of the bot. Please note your input text will be used to respond to clients of HotelBooking as the purpose of the bot'}}]
+section >>  [{'type': 'section', 'block_id': 'm3', 'text': {'type': 'mrkdwn', 'text': 'Initial metadata for HotelBooking bot has been initialized. What do you want to do next?'}}, {'type': 'actions', 'block_id': 'a2', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Deploy and Test the bot'}, 'value': 'Deploy and Test the bot'}, {'type': 'button', 'text': {'type': 'plain_text', 'text': 'Review config and add Journeys'}, 'value': 'Review config and add Journeys'}]}]
+section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Intent model training for HotelBooking will be started. This may take a bit.'}}]
+section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Intent training is complete. Please select a communication channel'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'Slack'}, 'value': 'Slack'}, {'text': {'type': 'plain_text', 'text': 'TKinter'}, 'value': 'TKinter'}, {'text': {'type': 'plain_text', 'text': 'Skype'}, 'value': 'Skype'}, {'text': {'type': 'plain_text', 'text': 'Whatsapp'}, 'value': 'Whatsapp'}, {'text': {'type': 'plain_text', 'text': 'Custom'}, 'value': 'Custom'}]}}]
+section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'You are all set to start your bot'}}, {'type': 'actions', 'block_id': 'a1', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Run bot'}, 'value': 'Run bot'}]}]
+section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Your bot should be up shortly'}}]

@@ -2,12 +2,16 @@ from flask import Flask, request, jsonify, make_response
 from slack import WebClient
 import json
 import requests
+import sys
 
-# Set tokens and variables
-SLACK_BOT_TOKEN = 'xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD'
-SLACK_VERIFICATION_TOKEN = 'm7DbUPPDQGuK1cU9Ox2kESLT'
-BOT_ENDPOINT = "http://127.0.0.1:2000/api/botController/"
-SEND_ENDPOINT = "http://127.0.0.1:2015/slack/sendMessage/"
+# Set parameters, tokens and variables
+botname = sys.argv[1]
+botdata = json.load(open('bots/'+botname+'/config/'+botname+'.json'))
+SLACK_BOT_TOKEN = botdata['deploy']['slackBotToken']
+SLACK_VERIFICATION_TOKEN = botdata['deploy']['slackVerToken']
+BOT_ENDPOINT = 'http://127.0.0.1:#port#/api/botController/'.replace('#port#', botdata['deploy']['botControllerPort'])
+SEND_ENDPOINT = "http://127.0.0.1:#port#/slack/sendMessage/".replace('#port#', botdata['deploy']['slackSendMessagePort'])
+
 
 # Slack client for Web API requests
 slack_client = WebClient(token=SLACK_BOT_TOKEN)
@@ -119,4 +123,5 @@ def interact_actions():
 
     return make_response("", 200)
 
-app.run(debug=True, port=2025)
+#app.run(debug=True, port=2025)
+app.run(debug=True, port=int(botdata['deploy']['slackInteractPort']))

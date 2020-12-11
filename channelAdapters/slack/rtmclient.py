@@ -3,10 +3,15 @@ from slack.errors import SlackApiError
 import requests
 import json
 import uuid
+import sys
 
-SLACK_BOT_TOKEN = 'xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD'
-BOT_ENDPOINT = "http://127.0.0.1:2000/api/botController/"
-SEND_ENDPOINT = "http://127.0.0.1:2015/slack/sendMessage/"
+botname = sys.argv[1]
+botdata = json.load(open('bots/'+botname+'/config/'+botname+'.json'))
+SLACK_BOT_TOKEN = botdata['deploy']['slackBotToken']
+#BOT_ENDPOINT = "http://127.0.0.1:2000/api/botController/"
+#SEND_ENDPOINT = "http://127.0.0.1:2015/slack/sendMessage/"
+BOT_ENDPOINT = 'http://127.0.0.1:#port#/api/botController/'.replace('#port#', botdata['deploy']['botControllerPort'])
+SEND_ENDPOINT = "http://127.0.0.1:#port#/slack/sendMessage/".replace('#port#', botdata['deploy']['slackSendMessagePort'])
 
 def send_message(msg, channel):
     pdata = {'message': msg, 'channel': channel}

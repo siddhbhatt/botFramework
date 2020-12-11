@@ -3,9 +3,12 @@ from tkinter import *
 import uuid
 import requests
 import json
+import sys
 
 USER_ID = str(uuid.uuid1())
-BOT_ENDPOINT = "http://127.0.0.1:2000/api/botController/"
+botname = sys.argv[1]
+botdata = json.load(open('bots/'+botname+'/config/'+botname+'.json'))
+BOT_ENDPOINT = "http://127.0.0.1:#port#/api/botController/".replace('#port#', botdata['deploy']['botControllerPort'])
 
 def prep_response(msg):
     data = {'user': USER_ID,
@@ -33,14 +36,14 @@ def send():
         responses = prep_response(msg)
         if responses:
             for res in responses:
-                ChatLog.insert(END, "TestBot2: " + res + '\n\n')
+                ChatLog.insert(END, botname+": " + res + '\n\n')
                     
         ChatLog.config(state=DISABLED)
         ChatLog.yview(END)
  
 
 base = Tk()
-base.title("Tk.TestBot2")
+base.title("Tk."+botname)
 base.geometry("400x500")
 base.resizable(width=FALSE, height=FALSE)
 

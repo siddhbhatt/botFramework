@@ -6,12 +6,16 @@ import numpy as np
 from flask import Flask, request, jsonify
 #import json
 import random
-
+import sys
+import json
 from tensorflow.keras.models import load_model
-model = load_model("models/intents/primaryintent_model.h5")
+
+botname = sys.argv[1]
+botdata = json.load(open('bots/'+botname+'/config/'+botname+'.json'))
+model = load_model('bots/'+botname+'/models/intents/primaryintent_model.h5')
 #intents = json.loads(open("../config/bot_booking.json"))
-words = pickle.load(open("models/intents/words.pkl",'rb'))
-classes = pickle.load(open("models/intents/classes.pkl",'rb'))
+words = pickle.load(open('bots/'+botname+"/models/intents/words.pkl",'rb'))
+classes = pickle.load(open('bots/'+botname+"/models/intents/classes.pkl",'rb'))
 
 app = Flask(__name__)
 
@@ -36,7 +40,8 @@ def bow(sentence, words, show_details=True):
                     print ("found in bag: %s" % w)
     return(np.array(bag))
 
-def predict_class(sentence, model):
+#def predict_class(sentence, model):
+def predict_class(sentence):
     # filter out predictions below a threshold
     p = bow(sentence, words,show_details=False)
     res = model.predict(np.array([p]))[0]
@@ -53,8 +58,11 @@ def predict_class(sentence, model):
 def journey_predict():
     msg = request.get_json(force=True)
 
-    journey = predict_class(msg, model)
+    #journey = predict_class(msg, model)
+    journey = predict_class(msg)
     return jsonify(journey[0])
 
-if __name__ == '__main__':
-    app.run(debug = True,port = 2005)
+#if __name__ == '__main__':
+#app.run(debug = True,port = 2005)
+intentControllerPort = botdata['deploy']['intentControllerPort']
+app.run(debug = True,port = int(intentControllerPort))

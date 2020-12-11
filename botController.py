@@ -1,8 +1,11 @@
 from flask import Flask, request, jsonify
 from coreFramework import Journey
+import sys
+import json
 
 app = Flask(__name__)
-jm = Journey()
+botname = sys.argv[1]
+jm = Journey(botname)
 
 @app.route('/api/botController/', methods=['POST'])
 def journeyManager():
@@ -14,4 +17,6 @@ def journeyManager():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=2000)
+    botdata = json.load(open('bots/'+botname+'/config/'+botname+'.json'))
+    botControllerPort = botdata['deploy']['botControllerPort']
+    app.run(debug=True, port=int(botControllerPort))

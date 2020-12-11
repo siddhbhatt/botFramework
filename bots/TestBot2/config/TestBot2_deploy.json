@@ -1,0 +1,10 @@
+{
+    "botName": "TestBot2",
+    "botControllerPort": "3000",
+    "intentControllerPort": "3005",
+    "channel": "Slack",
+    "enableNER": true,
+    "nerControllerPort": "3010",
+    "slackInteractPort": "3025",
+    "slackSendMessagePort": "3015"
+}

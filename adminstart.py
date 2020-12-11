@@ -3,7 +3,7 @@ import os
 
 logpath = 'C:/Users/SIDDHARTHABHATTACHAR/Documents/Copy/MachineLearning/sampleProjects/logbotFramework/'
 
-
+"""
 processes = [[['python', 'botController.py'], 'botController.log'],
 [['python', './apis/intentController.py'], 'intentController.log'],
 [['python', './apis/test/cities.py'], 'cities.log'],
@@ -12,6 +12,14 @@ processes = [[['python', 'botController.py'], 'botController.log'],
 [['python', './channelAdapters/slack/interact.py'], 'interact.log'],
 [['python', './apis/nerController.py'], 'nerController.log'],
 [['python', './channelAdapters/tkinter/tkinteract.py'], 'tkinteract.log']]
+"""
+processes = [[['python', './apis/intentController.py'], 'intentController.log'],
+[['python', './apis/test/cities.py'], 'cities.log'],
+[['python', './channelAdapters/slack/rtmclient.py'], 'rtmclient.log'],
+[['python', './channelAdapters/slack/sendmessage.py'], 'sendmessage.log'],
+[['python', './channelAdapters/slack/interact.py'], 'interact.log'],
+[['python', './apis/nerController.py'], 'nerController.log']]
+
 
 for n in processes:
     with open (logpath+n[1], 'w') as logfile:

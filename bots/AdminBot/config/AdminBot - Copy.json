@@ -1,0 +1,492 @@
+{
+	"botName": "AdminBot",
+	"deploy": {
+		"channel": "Slack",
+		"botControllerPort": "2000",
+		"intentControllerPort": "2005",
+		"nerControllerPort": "2006",
+		"slackInteractPort": "2025",
+		"slackSendMessagePort": "2015",
+		"slackAppName": "TestBot2",
+		"slackBotToken": "xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD",
+		"slackVerToken": "m7DbUPPDQGuK1cU9Ox2kESLT"
+	},
+	"intents": [{
+			"patterns": ["Hi there", "How are you", "Is anyone there?", "Hey", "Hello", "Good day"],
+			"journeyName": "greeting"
+		},
+		{
+			"patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+			"journeyName": "goodbye"
+		},
+		{
+			"patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
+			"journeyName": "options"
+		},
+		{
+			"patterns": ["Create new bot", "I want a new bot", "Build me a bot"],
+			"journeyName": "botIntialization"
+		}
+	],
+	"ner": [],
+	"journey": [{
+			"journeyName": "botIntialization",
+			"blocks": [{
+					"blockSeq": 1,
+					"blockName": "get_name",
+					"type": "output",
+					"getVariables": [],
+					"inputMapping": {},
+					"rules": [],
+					"api": {
+						"apiType": null,
+						"endpoint": null,
+						"params": [],
+						"dataMapping": {},
+						"outputMapping": []
+					},
+					"output": {
+						"message": {
+							"messageId": "m1",
+							"messageText": "Please specify name of the bot. Please note bot name should be unique and should not have any spaces.",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": null,
+								"atachmentSeq": null,
+								"attachmentDesc": null,
+								"attachmentType": null,
+								"options": []
+
+							}]
+						}
+					},
+					"setVariables": [],
+					"next": [{
+						"journeyName": "botIntialization",
+						"blockName": "get_purpose"
+					}]
+				},
+				{
+					"blockSeq": 2,
+					"blockName": "get_purpose",
+					"type": "input",
+					"getVariables": [],
+					"inputMapping": [{
+						"map": {
+							"name": "botName",
+							"path": "messageText",
+							"outputFormat": "item"
+						}
+					}],
+					"rules": [],
+					"api": {
+						"apiType": "",
+						"endpoint": "",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": "m2",
+							"messageText": "Please specify the pupose of the bot. Please note your input text will be used to respond to clients of #botName# as the purpose of the bot",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": null,
+								"atachmentSeq": null,
+								"attachmentDesc": null,
+								"attachmentType": null,
+								"options": []
+							}]
+						}
+					},
+					"setVariables": [{
+						"variableName": "botName",
+						"value": "#botName#",
+						"scope": "global"
+					}],
+					"next": [{
+						"journeyName": "botIntialization",
+						"blockName": "setup_options"
+					}]
+				},
+				{
+					"blockSeq": 3,
+					"blockName": "setup_options",
+					"type": "input",
+					"getVariables": ["botName"],
+					"inputMapping": [{
+						"map": {
+							"name": "purpose",
+							"path": "messageText",
+							"outputFormat": "item"
+						}
+					}],
+					"rules": {},
+					"api": {
+						"apiType": "POST",
+						"endpoint": "http://127.0.0.1:2030/adminapi/botHeader/",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {
+							"botName": "%botName%",
+							"optionText": "#purpose#"
+						},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": "m3",
+							"messageText": "Initial metadata for %botName% has been initialized. What do you want to do next?",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": "a2",
+								"atachmentSeq": 1,
+								"attachmentDesc": "Bot Options",
+								"attachmentType": "button",
+								"options": [{
+									"value": "Deploy and Test the bot"
+								}, {
+									"value": "Review config and add Journeys"
+								}]
+							}]
+						}
+					},
+					"setVariables": [{
+						"variableName": "purpose",
+						"value": "#purpose#",
+						"scope": "local"
+					}],
+					"next": [{
+						"journeyName": "botDeploy",
+						"blockName": "train_start"
+					}]
+				}
+			]
+		},
+		{
+			"journeyName": "botDeploy",
+			"blocks": [{
+					"blockSeq": 1,
+					"blockName": "select_bot",
+					"type": "output",
+					"getVariables": [],
+					"inputMapping": [],
+					"rules": {},
+					"api": {
+						"apiType": "",
+						"endpoint": "",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": null,
+							"messageText": null,
+							"messageType": null,
+							"attachments": [{
+								"attachmentId": null,
+								"atachmentSeq": null,
+								"attachmentDesc": null,
+								"attachmentType": null,
+								"options": []
+							}]
+						}
+					},
+					"setVariables": [],
+					"next": [{
+						"journeyName": "botDeploy",
+						"blockName": "train_start"
+					}]
+				},
+				{
+					"blockSeq": 2,
+					"blockName": "train_start",
+					"type": "output",
+					"getVariables": ["botName"],
+					"inputMapping": [],
+					"rules": {},
+					"api": {
+						"apiType": null,
+						"endpoint": null,
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": "m2",
+							"messageText": "Intent model training for %botName% will be started. This may take a bit. Please confirm.",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": "a1",
+								"atachmentSeq": 1,
+								"attachmentDesc": "confirm button",
+								"attachmentType": "button",
+								"options": [{"value": "Yes"}]
+							}]
+						}
+					},
+					"setVariables": [],
+					"next": [{
+						"journeyName": "botDeploy",
+						"blockName": "train_execute"
+					}]
+				},
+				{
+					"blockSeq": 3,
+					"blockName": "train_execute",
+					"type": "output",
+					"getVariables": ["botName"],
+					"inputMapping": [],
+					"rules": {},
+					"api": {
+						"apiType": "POST",
+						"endpoint": "http://127.0.0.1:2030/adminapi/botstart",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {
+							"botName": "%botName%",
+							"process": "modelTrain/intents/trainIntents.py"
+						},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": "m2",
+							"messageText": "Intent training is complete. Please select a communication channel",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": "a1",
+								"atachmentSeq": 1,
+								"attachmentDesc": "Channels",
+								"attachmentType": "dropdown",
+								"options": [{
+									"value": "Slack"
+								}, {
+									"value": "TKinter"
+								}, {
+									"value": "Skype"
+								}, {
+									"value": "Whatsapp"
+								}, {
+									"value": "Custom"
+								}]
+							}]
+						}
+					},
+					"setVariables": [],
+					"next": [{
+						"journeyName": "botDeploy",
+						"blockName": "update_metadata"
+					}]
+				},
+				{
+					"blockSeq": 4,
+					"blockName": "update_metadata",
+					"type": "input",
+					"getVariables": ["botName"],
+					"inputMapping": [{"map": {"name": "selection", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
+					"rules": {
+						"oneOf":[{"#selection#":"TKinter"}]
+					},
+					"api": {
+						"apiType": "POST",
+						"endpoint": "http://127.0.0.1:2030/adminapi/botHeader/",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {
+							"botName": "%botName%",
+							"deploy": {"channel": "TKinter", "botControllerPort": "3000", "intentControllerPort": "3005"}
+						},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": "m2",
+							"messageText": "You are all set to start your bot",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": "a1",
+								"atachmentSeq": 1,
+								"attachmentDesc": "confirm button",
+								"attachmentType": "button",
+								"options": [{"value": "Run bot"}]
+							}]
+						}
+					},
+					"setVariables": [],
+					"next": [{
+						"journeyName": "botDeploy",
+						"blockName": "tk_execute"
+					}]
+				},
+				{
+					"blockSeq": 5,
+					"blockName": "tk_execute",
+					"type": "output",
+					"getVariables": ["botName"],
+					"inputMapping": [],
+					"rules": {},
+					"api": {
+						"apiType": "POST",
+						"endpoint": "http://127.0.0.1:2030/adminapi/botstart",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {
+							"botName": "%botName%",
+							"process": "botstart.py"
+						},
+						"outputMapping": {}
+					},
+					"output": {
+						"message": {
+							"messageId": "m2",
+							"messageText": "Your bot should be up shortly",
+							"messageType": "plaintext",
+							"attachments": [{
+								"attachmentId": null,
+								"atachmentSeq": null,
+								"attachmentDesc": null,
+								"attachmentType": null,
+								"options": []
+							}]
+						}
+					},
+					"setVariables": [],
+					"next": []
+				}
+			]
+		},
+		{
+			"journeyName": "greeting",
+			"blocks": [{
+				"blockSeq": 1,
+				"blockName": "wish",
+				"type": "output",
+				"getVariables": [],
+				"inputMapping": [],
+				"rules": {},
+				"api": {
+					"apiType": "",
+					"endpoint": "",
+					"params": [{
+						"key": "",
+						"value": ""
+					}],
+					"dataMapping": {},
+					"outputMapping": {}
+				},
+				"output": {
+					"message": {
+						"messageId": "m5",
+						"messageText": "Hello there",
+						"messageType": "plaintext",
+						"attachments": [{
+							"attachmentId": null,
+							"atachmentSeq": null,
+							"attachmentDesc": null,
+							"attachmentType": null,
+							"options": []
+						}]
+					}
+				},
+				"setVariables": [],
+				"next": []
+			}]
+		},
+		{
+			"journeyName": "goodbye",
+			"blocks": [{
+				"blockSeq": 1,
+				"blockName": "wish",
+				"type": "output",
+				"getVariables": [],
+				"inputMapping": [],
+				"rules": {},
+				"api": {
+					"apiType": "",
+					"endpoint": "",
+					"params": [{
+						"key": "",
+						"value": ""
+					}],
+					"dataMapping": {},
+					"outputMapping": {}
+				},
+				"output": {
+					"message": {
+						"messageId": "m6",
+						"messageText": "Thanks, see you soon!",
+						"messageType": "plaintext",
+						"attachments": [{
+							"attachmentId": null,
+							"atachmentSeq": null,
+							"attachmentDesc": null,
+							"attachmentType": null,
+							"options": []
+						}]
+					}
+				},
+				"setVariables": [],
+				"next": []
+			}]
+		},
+		{
+			"journeyName": "options",
+			"blocks": [{
+				"blockSeq": 1,
+				"blockName": "listofservices",
+				"type": "output",
+				"getVariables": [],
+				"inputMapping": [],
+				"rules": {},
+				"api": {
+					"apiType": "",
+					"endpoint": "",
+					"params": [{
+						"key": "",
+						"value": ""
+					}],
+					"dataMapping": {},
+					"outputMapping": {}
+				},
+				"output": {
+					"message": {
+						"messageId": "m7",
+						"messageText": "I can help you build a bot",
+						"messageType": "plaintext",
+						"attachments": [{
+							"attachmentId": null,
+							"atachmentSeq": null,
+							"attachmentDesc": null,
+							"attachmentType": null,
+							"options": []
+						}]
+					}
+				},
+				"setVariables": [],
+				"next": []
+			}]
+		}
+
+	]
+}

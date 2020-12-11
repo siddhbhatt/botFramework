@@ -9,13 +9,19 @@ from spacy.util import minibatch, compounding
 import pickle
 import re
 import json
+import sys
+import os
 
-BOTCONFIG_PATH = 'config/bot_booking.json'
-TRAIN_DATA_PATH = 'models/ner/train_data/data.pkl'
-MODEL_PATH = 'models/ner/model'
+botname = sys.argv[1]
+BOTCONFIG_PATH = 'bots/'+botname+'/config/'+botname+'.json'
+#TRAIN_DATA_PATH = 'models/ner/train_data/data.pkl'
+#MODEL_PATH = 'models/ner/model'
+MODEL_PATH = 'bots/'+botname+'/models/ner'
 
 botdata = json.load(open(BOTCONFIG_PATH))
 aoi = botdata['ner']
+if not os.path.exists(MODEL_PATH):
+    os.makedirs(MODEL_PATH)
 
 def prepareTrainData():
     train_set = []
@@ -33,14 +39,16 @@ def prepareTrainData():
                     train_set.append(train_item)
 
         print ("train_set = \n", train_set)
-        pickle.dump(train_set, open(TRAIN_DATA_PATH, 'wb'))
+        #pickle.dump(train_set, open(TRAIN_DATA_PATH, 'wb'))
     return train_set
 
+"""
 @plac.annotations(
     model=("Model name. Defaults to blank 'en' model.", "option", "m", str),
     output_dir=("Optional output directory", "option", "o", Path),
     n_iter=("Number of training iterations", "option", "n", int),
 )
+"""
 def main(model=None, output_dir=MODEL_PATH, n_iter=100):
     """Load the model, set up the pipeline and train the entity recognizer."""
     if model is not None:
@@ -121,4 +129,5 @@ def main(model=None, output_dir=MODEL_PATH, n_iter=100):
 
 
 if __name__ == "__main__":
-    plac.call(main)
+    #plac.call(main)
+    main()

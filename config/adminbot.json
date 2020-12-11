@@ -1,9 +1,6 @@
 {
-	"botName": "TestBot2",
-	"intents": [{
-			"patterns": ["I want to book a cab", "book my cab", "get me taxi", "book a car"],
-			"journeyName": "bookcab"
-		},
+	"botName": "AdminBot",
+	"intents": [
 		{
 			"patterns": ["Hi there", "How are you", "Is anyone there?", "Hey", "Hello", "Good day"],
 			"journeyName": "greeting"
@@ -15,55 +12,41 @@
 		{
 			"patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
 			"journeyName": "options"
+        },
+        {
+            "patterns": ["Create new bot", "I want a new bot", "Build me a bot"],
+			"journeyName": "botIntialization"
 		}
 	],
-	"ner":[{
-		"patterns": ["Can you do it at 6:15 pm on 01/12/2020 from Kolkata", "Pick me up from Kolkata"],
-		"entities":[{"keyword":"Kolkata", "name": "CITY"}, {"keyword": "6:15 pm", "name": "TIME"}, {"keyword": "01/12/2020", "name": "DATE"}]
-	},
-	{
-		"patterns": ["Burdawan, 30/11/2020 @ 7:00 am", "Pick me up on 30/11/2020 from Burdawan"],
-		"entities":[{"keyword":"Burdawan", "name": "CITY"}, {"keyword": "7:00 am", "name": "TIME"}, {"keyword": "30/11/2020", "name": "DATE"}]
-	},
-	{
-		"patterns": ["How about in Hyderabad on 02/01/2021 at 8:45pm?", "Want a taxi in Mumbai", "Pick up will be from Delhi airport at 4am"],
-		"entities":[{"keyword":"Hyderabad", "name": "CITY"}, {"keyword": "8:45pm", "name": "TIME"}, {"keyword": "02/01/2021", "name": "DATE"}, {"keyword": "Mumbai", "name": "CITY"}, {"keyword": "Delhi", "name": "CITY"}, {"keyword": "4am", "name": "TIME"}]
-	}],
+	"ner":[],
 	"journey": [{
-			"journeyName": "bookcab",
+			"journeyName": "botIntialization",
 			"blocks": [{
 					"blockSeq": 1,
-					"blockName": "entry_msg",
+					"blockName": "get_name",
 					"type": "output",
 					"getVariables": [],
 					"inputMapping": {},
 					"rules": [],
 					"api": {
-						"apiType": "GET",
-						"endpoint": "http://127.0.0.1:2020/testapi/cities",
-						"params": [{
-							"key": "country",
-							"value": "india"
-						}],
+						"apiType": null,
+						"endpoint": null,
+						"params": [],
 						"dataMapping": {},
-						"outputMapping": [
-							{
-								"map": {"name": "out2", "path": ["country","states","cities"], "outputFormat": "jsonarray", "outputTag": "value"}
-							}
-						]
+						"outputMapping": []
 					},
 					"output": {
 						"message": {
 							"messageId": "m1",
-							"messageText": "Please select city",
+							"messageText": "Please specify name of the bot. Please note bot name should be unique and should not have any spaces.",
 							"messageType": "plaintext",
 							"attachments":[
 								{
-									"attachmentId": "a1",
-									"atachmentSeq": 1,
-									"attachmentDesc": "Cities",
-									"attachmentType": "dropdown",
-									"options": ["@out2@"]
+									"attachmentId": null,
+									"atachmentSeq": null,
+									"attachmentDesc": null,
+									"attachmentType": null,
+									"options": []
 					
 								}
 							]
@@ -71,17 +54,17 @@
 					},
 					"setVariables": [],
 					"next": [{
-						"journeyName": "bookcab",
-						"blockName": "getdate"
+						"journeyName": "botIntialization",
+						"blockName": "get_purpose"
 					}]
 				},
 				{
 					"blockSeq": 2,
-					"blockName": "getdate",
+					"blockName": "get_purpose",
 					"type": "input",
 					"getVariables": [],
 					"inputMapping": [
-						{"map": {"name": "city", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}
+						{"map": {"name": "botName", "path": "messageText", "outputFormat": "item"}}
 					],
 					"rules": [],
 					"api": {
@@ -97,48 +80,7 @@
 					"output": {
 						"message":{
 							"messageId": "m2",
-							"messageText": "Please Select the Date",
-							"messageType": "plaintext",
-							"attachments": [{
-									"attachmentId": "a2",
-									"atachmentSeq": 1,
-									"attachmentDesc": "Date Selection",
-									"attachmentType": "datepicker",
-									"options": []
-								}]
-						}
-					},
-					"setVariables": [{
-						"variableName": "cityName",
-						"value": "#city#",
-						"scope": "global"
-					}],
-					"next": [{
-						"journeyName": "bookcab",
-						"blockName": "gettime"
-					}]
-				},
-				{
-					"blockSeq": 3,
-					"blockName": "gettime",
-					"type": "input",
-					"getVariables": [],
-					"inputMapping": [{"map": {"name": "date", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
-					"rules": [],
-					"api": {
-						"apiType": "",
-						"endpoint": "",
-						"params": [{
-							"key": "",
-							"value": ""
-						}],
-						"dataMapping": {},
-						"outputMapping": {}
-					},
-					"output": {
-						"message":{
-							"messageId": "m2",
-							"messageText": "Please state time in 12 hour format, for example - 7:30 pm",
+							"messageText": "Please specify the pupose of the bot. Please note your input text will be used to respond to clients of #botName# as the purpose of the bot",
 							"messageType": "plaintext",
 							"attachments": [{
 									"attachmentId": null,
@@ -150,20 +92,21 @@
 						}
 					},
 					"setVariables": [{
-						"variableName": "date",
-						"value": "#date#",
-						"scope": "local"}],
+						"variableName": "botName",
+						"value": "#botName#",
+						"scope": "global"
+					}],
 					"next": [{
-						"journeyName": "bookcab",
-						"blockName": "checkdetails"
+						"journeyName": "botIntialization",
+						"blockName": "select_channel"
 					}]
 				},
 				{
-					"blockSeq": 4,
-					"blockName": "checkdetails",
+					"blockSeq": 3,
+					"blockName": "select_channel",
 					"type": "input",
-					"getVariables": ["cityName", "date"],
-					"inputMapping": [ {"ner": {"name": "time", "entity": "TIME", "outputFormat": "item"}}],
+					"getVariables": [],
+					"inputMapping": [{"map": {"name": "purpose", "path": "messageText", "outputFormat": "item"}}],
 					"rules": [],
 					"api": {
 						"apiType": "",
@@ -178,35 +121,33 @@
 					"output": {
 						"message":{
 							"messageId": "m3",
-							"messageText": "You selected %cityName% as city and %date% and #time# as date and time. To confirm booking press Yes else No",
+							"messageText": "Please select channel for your bot",
 							"messageType": "plaintext",
 							"attachments": [{
-									"attachmentId": "a3",
+									"attachmentId": "a1",
 									"atachmentSeq": 1,
-									"attachmentDesc": "Confirm Selection",
-									"attachmentType": "button",
-									"options": [{"value": "Yes"}, {"value": "No"}]
+									"attachmentDesc": "Channels",
+									"attachmentType": "dropdown",
+									"options": [{"value": "Slack"}, {"value": "TKinter"}, {"value": "Skype"}, {"value": "Whatsapp"}, {"value": "Custom"}]
 								}]
 						}
 					},
 					"setVariables": [{
-						"variableName": "date",
-						"value": "#date#",
+						"variableName": "purpose",
+						"value": "#purpose#",
 						"scope": "local"}],
 					"next": [{
-						"journeyName": "bookcab",
-						"blockName": "confirmbooking"
+						"journeyName": "botIntialization",
+						"blockName": "slack_classic"
 					}]
 				},
 				{
-					"blockSeq": 5,
-					"blockName": "confirmbooking",
+					"blockSeq": 4,
+					"blockName": "slack_classic",
 					"type": "input",
-					"getVariables": ["cityName", "date"],
-					"inputMapping": [{"map": {"name": "selection", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
-					"rules": {
-						"oneOf":[{"#selection#":"Yes"}]
-					},
+					"getVariables": [],
+					"inputMapping": [{"map": {"name": "channel", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
+					"rules": {"oneOf":[{"#channel#":"Slack"}]},
 					"api": {
 						"apiType": "",
 						"endpoint": "",
@@ -220,14 +161,54 @@
 					"output": {
 						"message":{
 							"messageId": "m4",
-							"messageText": "Thanks, your booking confirmation id is 123",
+							"messageText": "Create a Slack app in https://api.slack.com/apps and confirm once done",
 							"messageType": "plaintext",
 							"attachments": [{
-									"attachmentId": null,
-									"atachmentSeq": null,
-									"attachmentDesc": null,
-									"attachmentType": null,
-									"options": []
+									"attachmentId": "a2",
+									"atachmentSeq": 1,
+									"attachmentDesc": "Confirm creation",
+									"attachmentType": "button",
+									"options": [{"value": "Confirm"}]
+								}]
+						}
+					},
+					"setVariables": [{
+						"variableName": "channel",
+						"value": "#channel#",
+						"scope": "local"}],
+					"next": [{
+						"journeyName": "botIntialization",
+						"blockName": "starter_metadata"
+					}]
+				},
+				{
+					"blockSeq": 5,
+					"blockName": "starter_metadata",
+					"type": "input",
+					"getVariables": ["botName", "purpose", "channel"],
+					"inputMapping": [{"map": {"name": "confirmation", "path": ["attachments", "optionsSelected"], "outputFormat": "item"}}],
+					"rules": {"oneOf":[{"#confirmation#":"Confirm"}]},
+					"api": {
+						"apiType": "POST",
+						"endpoint": "http://127.0.0.1:2030/adminapi/botHeader/",
+						"params": [{
+							"key": "",
+							"value": ""
+						}],
+						"dataMapping": {"botName": "%botName%", "channel": "%channel%", "optionText": "%purpose%"},
+						"outputMapping": {}
+					},
+					"output": {
+						"message":{
+							"messageId": "m5",
+							"messageText": "Metadata for %botName% has been initialized. What do you want to do next?",
+							"messageType": "plaintext",
+							"attachments": [{
+									"attachmentId": "a2",
+									"atachmentSeq": 1,
+									"attachmentDesc": "Bot Options",
+									"attachmentType": "button",
+									"options": [{"value": "Deploy and Test the bot"}, {"value": "Review config and add Journeys"}]
 								}]
 						}
 					},
@@ -337,7 +318,7 @@
 					"output": {
 						"message":{
 							"messageId": "m7",
-							"messageText": "I can help you book a cab",
+							"messageText": "I can help you build a bot",
 							"messageType": "plaintext",
 							"attachments": [{
 									"attachmentId": null,

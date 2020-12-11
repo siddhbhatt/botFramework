@@ -7,14 +7,15 @@ import pandas as pd
 import re
 
 #Path variables
-SESSION_PATH = 'config/session.json'
-SESVARIABLE_PATH = 'config/sessionVariables.json'
-BOTCONFIG_PATH = 'config/bot_booking.json'
-INTENT_ENDPOINT = "http://127.0.0.1:2005/api/intentController/"
-NER_ENDPOINT = 'http://127.0.0.1:2006/api/nerController/'
+#SESSION_PATH = 'config/session.json'
+#SESVARIABLE_PATH = 'config/sessionVariables.json'
+#BOTCONFIG_PATH = 'config/adminbot.json'
+INTENT_ENDPOINT = "http://127.0.0.1:#port#/api/intentController/"
+NER_ENDPOINT = 'http://127.0.0.1:#port#/api/nerController/'
 
 #Session class
 class Session:
+    """
     try:
         session = json.load(open(SESSION_PATH))
     except OSError:
@@ -23,10 +24,16 @@ class Session:
         sesVariables = json.load(open(SESVARIABLE_PATH))
     except OSError:
         sesVariables = []
+    """
     
-    def __init__(self):
-        self.session = Session.session
-        self.sesVariables = Session.sesVariables
+    def __init__(self, botname):
+        self.botname = botname
+        try:
+            self.session = json.load(open('bots/'+self.botname+'/config/session.json'))
+            self.sesVariables = json.load(open('bots/'+self.botname+'/config/sessionVariables.json'))
+        except OSError:
+            self.session =[]
+            self.sesVariables = []
 
     def getSession(self, user):
         #return sessionId, JourneyName, blockName
@@ -94,11 +101,13 @@ class Session:
 
 #Block class
 class Block(Session):
-    botdata = json.load(open(BOTCONFIG_PATH))
+    #botdata = json.load(open(BOTCONFIG_PATH))
     
-    def __init__(self):
-        self.botdata = Block.botdata
-        self.nerEndpoint = NER_ENDPOINT
+    def __init__(self, botname):
+        super(Block, self).__init__(botname=botname)
+        self.botdata = json.load(open('bots/'+self.botname+'/config/'+self.botname+'.json'))
+        if self.botdata['ner']:
+            self.nerEndpoint = NER_ENDPOINT.replace('#port#', self.botdata['deploy']['nerControllerPort'])
 
     def getVariables(self, journeyName, blockName, sessionId):
         getVariable=None
@@ -171,7 +180,7 @@ class Block(Session):
  
         return check
 
-    def callAPI(self, journeyName, blockName, **kwargs):
+    def callAPI(self, journeyName, blockName, var, inp):
         for a in self.botdata['journey']:
             if a['journeyName'] == journeyName:
                 for b in a['blocks']:
@@ -192,9 +201,10 @@ class Block(Session):
                 
             exStr = 'Block.foo = lambda self: requests.get(url="' + str(api['endpoint']) + '", params=' + json.dumps(payload) +')'
             
-        elif api['apiType'] == 'POST':
-            payload = api['dataMapping']
-            exStr = 'Block.foo = lambda self: requests.post(url="' + str(api['endpoint']) + '", data=' + json.dumps(payload) +')'
+        elif api['apiType'] in ['POST', 'PUT']:
+            payload_r1 = self.resolveVariables(api['dataMapping'], var, '%')
+            payload_r2 = self.resolveVariables(payload_r1, inp, '#')
+            exStr = 'Block.foo = lambda self: requests.' + api['apiType'].lower() + '(url="' + str(api['endpoint']) + '", json=' + json.dumps(payload_r2) +')'
         else:
             return []
             
@@ -231,18 +241,22 @@ class Block(Session):
                     for k, v in value.items():
                         lt = []
                         if k == 'path':
-                            x = pd.json_normalize(inp, v).to_dict()
-                            r = self.iterdict(x, lt)
-                            if value['outputFormat'] == 'item' and len(r)==1:
-                                d = {value['name']: r[0]}
-                            elif value['outputFormat'] == 'arrayitem':
-                                d = {value['name']: r}
-                            elif value['outputFormat'] == 'jsonarray' and 'outputTag' in value.keys():
-                                int_l = []
-                                for n in r:
-                                    int_d = {value['outputTag']: n}
-                                    int_l.append(int_d)
-                                d = {value['name']: int_l}
+                            if isinstance(v, list):
+                                x = pd.json_normalize(inp, v).to_dict()
+                                r = self.iterdict(x, lt)
+                                if value['outputFormat'] == 'item' and len(r)==1:
+                                    d = {value['name']: r[0]}
+                                elif value['outputFormat'] == 'arrayitem':
+                                    d = {value['name']: r}
+                                elif value['outputFormat'] == 'jsonarray' and 'outputTag' in value.keys():
+                                    int_l = []
+                                    for n in r:
+                                        int_d = {value['outputTag']: n}
+                                        int_l.append(int_d)
+                                    d = {value['name']: int_l}
+                            elif isinstance(v, str):
+                                if value['outputFormat'] == 'item':
+                                    d = {value['name']:inp[v]}
                             else:
                                 print("Error from mapping: Invalid mapping")
                             out.append(d)
@@ -297,6 +311,18 @@ class Block(Session):
                             new = q[p]
                             old = symbol + p + symbol
                             out = out.replace(old, new)
+        elif isinstance(inp, dict):
+            out = inp
+            for k, v in out.items():
+                if isinstance(v, str):
+                    match = re.search(symbol + '(.*)' + symbol, v)
+                    if match and lookup:
+                        for a in lookup:
+                            for b, c in a.items():
+                                if b == match.group(1):
+                                    print ("Debug line from resolveVariables - b =", b, "\nmatch = ", c)
+                                    out[k] = c
+            print("Debug line from resolveVariables - out = ", out)
 
         return out
 
@@ -368,18 +394,19 @@ class Block(Session):
         mappedInput = self.getInput(block['journeyName'], block['blockName'], msg)
         check = self.applyRules(block['journeyName'], block['blockName'], mappedInput, var)
         if check:
-            mappedResponse = self.callAPI(block['journeyName'], block['blockName'])
+            mappedResponse = self.callAPI(block['journeyName'], block['blockName'], var, mappedInput)
             if 'sessionId' in kwargs:
                 self.setVariables(block['journeyName'], block['blockName'], kwargs['sessionId'], kwargs['userId'], mappedInput)
             result = self.sendReponse(block['journeyName'], block['blockName'], mappedResponse, mappedInput, var)
             return result
 
 class Journey(Block):
-    def __init__(self):
-        self.intentendpoint = INTENT_ENDPOINT
-        self.nerEndpoint = NER_ENDPOINT
-        self.session = super().session
-        self.botdata = super().botdata
+    def __init__(self, botname):
+        super(Journey, self).__init__(botname=botname)
+        self.intentendpoint = INTENT_ENDPOINT.replace('#port#', self.botdata['deploy']['intentControllerPort'])
+        #self.nerEndpoint = NER_ENDPOINT
+        #self.session = super().session
+        #self.botdata = super().botdata
         
     def getIntent(self, message, **kwargs):
         intent={}
@@ -392,7 +419,8 @@ class Journey(Block):
 
     def startNewJourney(self, msg, user):
         self.deleteSession(user)
-        self.botdata = json.load(open(BOTCONFIG_PATH))
+        self.botdata = json.load(open('bots/'+self.botname+'/config/'+self.botname+'.json'))
+        #self.botdata = json.load(open(BOTCONFIG_PATH))
         jny = self.getIntent(msg['messageText'])
         next = self.getNext(jny['intent'])
         n=0

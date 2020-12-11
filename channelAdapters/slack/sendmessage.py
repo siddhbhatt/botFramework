@@ -1,9 +1,13 @@
 from flask import Flask, request, jsonify
 from slack import WebClient
 from slack.errors import SlackApiError
+import sys
+import json
 
+botname = sys.argv[1]
+botdata = json.load(open('bots/'+botname+'/config/'+botname+'.json'))
 # Your app's Slack bot user token
-SLACK_BOT_TOKEN = 'xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD'
+SLACK_BOT_TOKEN = botdata['deploy']['slackBotToken']
 
 # Slack client for Web API requests
 web_client = WebClient(token=SLACK_BOT_TOKEN)
@@ -99,4 +103,5 @@ def send_message():
     return jsonify(section)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=2015)
+    #app.run(debug=True, port=2015)
+    app.run(debug=True, port=int(botdata['deploy']['slackSendMessagePort']))

@@ -62,4 +62,5 @@ def submitfinal():
     #return render_template('main.html')
     return Response(json_conv2,headers={'Content-Disposition':'attachment;filename=model.json'})
 if __name__ == "__main__":
-    app.run(debug = True, host = "0.0.0.0", port = 4040)
+    #app.run(debug = True, host = "0.0.0.0", port = 4040)
+    app.run(debug = True, port = 4040)

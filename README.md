@@ -8,7 +8,7 @@ Presently chatbot development is choice of technology and channel driven (by cha
 
 The project intends to 
  * Bring back control/visibility to business community by enabling them create and manage bot themselves
- * Separate Bot Core Engine from Channels to enable channel independence and multi-channel experience (example of multi-channel will be to commnicate with chatbot via text messages and slack at the same time)
+ * Separate Bot Core Engine from Channels to enable channel independence and multi-channel experience (example of multi-channel will be to communicate with chatbot via text messages and slack at the same time)
 
 ## Links
 [Demo video](https://www.youtube.com/watch?v=X1D0ceIVELw)

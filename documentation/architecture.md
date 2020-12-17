@@ -8,7 +8,7 @@
 5. Blocks - Unit task within a Journey
 6. Session Manager - Session is a stateful interchange of data between client and chatbot persisted temporarily and Session Manager is responsible for managing all sessions
 7. Intent Identification - Identify intent from client input e.g.- messages like "Hi", "Hello", "How are you today?" indicate greeting message from user
-8. Named Entity Resolution (NER) - Identify entity of interest from a client input e.g. - In a message "Show me options in Kolkata" chatbot may be interested in city name of "Kolkata".
+8. Named Entity Resolution (NER) - Identify entity of interest from a client input e.g. - in a message "Show me options in Kolkata" chatbot may be interested in city name of "Kolkata"
 
 ## Concept
 Any chatbot can be represented as a combination of:
@@ -65,6 +65,6 @@ To elaborate the flow, let's consider:
 
 And the process continues...
 
-We find Chatbots can follow the above flow irrespective of use case/requirements. Requirements are saved as configrations. Refer to the JSON configuration of AdminBot [here](../bots/AdminBot/config/AdminBot.json)
+We find Chatbots can follow the above flow irrespective of use case/requirements. Requirements are saved as configrations. As an example, refer to the JSON configuration of AdminBot [here](../bots/AdminBot/config/AdminBot.json)
 
 Hopefully it explains the buildings blocks for BotFramework.

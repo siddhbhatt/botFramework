@@ -341,10 +341,11 @@ class Block(Session):
                 if x:
                     i['options'] = x
         
-        a = self.resolveVariables(output['message']['messageText'], api, '@')
-        b = self.resolveVariables(a, inp, '#')
-        c = self.resolveVariables(b, var, '%')
-        output['message']['messageText'] = c
+        if output['message']['messageText']:
+            a = self.resolveVariables(output['message']['messageText'], api, '@')
+            b = self.resolveVariables(a, inp, '#')
+            c = self.resolveVariables(b, var, '%')
+            output['message']['messageText'] = c
         
         return output
 

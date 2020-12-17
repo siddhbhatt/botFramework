@@ -103,7 +103,7 @@ def invoke_bot(msg, channel):
     
         
     for res in response:
-        if res and 'message' in res:
+        if res and res['message']['messageText']:
             send_message(res['message'], channel)
     return
 

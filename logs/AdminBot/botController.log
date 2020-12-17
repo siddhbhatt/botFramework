@@ -7,41 +7,50 @@
  * Debugger is active!
  * Debugger PIN: 742-439-305
  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
-127.0.0.1 - - [11/Dec/2020 23:23:14] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:23:26] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:24:04] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:24:25] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:24:42] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:25:49] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:26:33] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:32:35] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:34:10] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [11/Dec/2020 23:41:22] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:38:09] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:38:18] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:38:43] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:38:58] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:39:25] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:39:30] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:57:23] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:59:04] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 16:59:18] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:04:15] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:14:43] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:14:50] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:17:55] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:27:57] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:28:07] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:28:18] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:28:43] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
 debug line from deleteSession - session =  []
 debug line from deleteSession - sesVariables =  []
 debug line from deleteSession - session =  []
 debug line from deleteSession - sesVariables =  []
-debug line from deleteSession - session =  []
-debug line from deleteSession - sesVariables =  []
-debug line from deleteSession - session =  []
-debug line from deleteSession - sesVariables =  []
-debug line from deleteSession - session =  []
-debug line from deleteSession - sesVariables =  []
-debug line from getInput - out =  [{'botName': 'HotelBooking'}]
-debug line from setVariables - updDict =  {'sessionId': 'f24d9ffe-3bd9-11eb-a5e6-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'get_purpose', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}
-debug line from upsertSesVariables - sesVariables =  [{'sessionId': 'f24d9ffe-3bd9-11eb-a5e6-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'get_purpose', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}]
-debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
-debug line from getInput - out =  [{'purpose': 'I can assist in booking rooms at our chain of hotels'}]
+debug line from getInput - out =  [{'botName': 'HospitalBooking'}]
+debug line from setVariables - updDict =  {'sessionId': '2a9ce10c-4058-11eb-b78c-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'get_purpose', 'sessionVariables': [{'botName': 'HospitalBooking', 'scope': 'global'}]}
+debug line from upsertSesVariables - sesVariables =  [{'sessionId': '2a9ce10c-4058-11eb-b78c-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'get_purpose', 'sessionVariables': [{'botName': 'HospitalBooking', 'scope': 'global'}]}]
+debug line from getVariables - res =  [{'botName': 'HospitalBooking'}]
+debug line from getInput - out =  [{'purpose': 'I can book rooms at any of our hotels'}]
 Debug line from resolveVariables - b = botName 
-match =  HotelBooking
-Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'optionText': '#purpose#'}
+match =  HospitalBooking
+Debug line from resolveVariables - out =  {'botName': 'HospitalBooking', 'optionText': '#purpose#'}
 Debug line from resolveVariables - b = purpose 
-match =  I can assist in booking rooms at our chain of hotels
-Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'optionText': 'I can assist in booking rooms at our chain of hotels'}
-exStr =  Block.foo = lambda self: requests.post(url="http://127.0.0.1:2030/adminapi/botHeader/", json={"botName": "HotelBooking", "optionText": "I can assist in booking rooms at our chain of hotels"})
-debug line from setVariables - updDict =  {'sessionId': 'f24d9ffe-3bd9-11eb-a5e6-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'setup_options', 'sessionVariables': [{'purpose': 'I can assist in booking rooms at our chain of hotels', 'scope': 'local'}]}
-debug line from upsertSesVariables - sesVariables =  [{'sessionId': 'f24d9ffe-3bd9-11eb-a5e6-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'setup_options', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}, {'purpose': 'I can assist in booking rooms at our chain of hotels', 'scope': 'local'}]}]
-debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
+match =  I can book rooms at any of our hotels
+Debug line from resolveVariables - out =  {'botName': 'HospitalBooking', 'optionText': 'I can book rooms at any of our hotels'}
+exStr =  Block.foo = lambda self: requests.post(url="http://127.0.0.1:2030/adminapi/botHeader/", json={"botName": "HospitalBooking", "optionText": "I can book rooms at any of our hotels"})
+debug line from setVariables - updDict =  {'sessionId': '2a9ce10c-4058-11eb-b78c-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'setup_options', 'sessionVariables': [{'purpose': 'I can book rooms at any of our hotels', 'scope': 'local'}]}
+debug line from upsertSesVariables - sesVariables =  [{'sessionId': '2a9ce10c-4058-11eb-b78c-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botIntialization', 'blockName': 'setup_options', 'sessionVariables': [{'botName': 'HospitalBooking', 'scope': 'global'}, {'purpose': 'I can book rooms at any of our hotels', 'scope': 'local'}]}]
+debug line from getInput - out =  [{'selection': 'Review config and add Journeys'}]
+debug line from getInput - out =  [{'selection': 'Review config and add Journeys'}]
+debug line from getVariables - res =  [{'botName': 'HospitalBooking'}]
+debug line from deleteSession - session =  []
+debug line from deleteSession - sesVariables =  []
+exStr =  Block.foo = lambda self: requests.get(url="http://127.0.0.1:2030/adminapi/listbots", params={"dummy": "dummy"})
+debug line from getInput - out =  [{'botName': 'HotelBooking'}]
+debug line from setVariables - updDict =  {'sessionId': 'd582d768-405a-11eb-b2b8-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botDeploy', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}
+debug line from upsertSesVariables - sesVariables =  [{'sessionId': 'd582d768-405a-11eb-b2b8-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botDeploy', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}]
 debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
 Debug line from resolveVariables - b = botName 
 match =  HotelBooking
@@ -62,3 +71,49 @@ Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'process':
 Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'process': 'botstart.py'}
 exStr =  Block.foo = lambda self: requests.post(url="http://127.0.0.1:2030/adminapi/botstart", json={"botName": "HotelBooking", "process": "botstart.py"})
 Error from callAPI:  ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+debug line from deleteSession - session =  []
+debug line from deleteSession - sesVariables =  []
+exStr =  Block.foo = lambda self: requests.get(url="http://127.0.0.1:2030/adminapi/listbots", params={"dummy": "dummy"})
+debug line from getInput - out =  [{'botName': 'HotelBooking'}]
+debug line from setVariables - updDict =  {'sessionId': '40fc5a58-405d-11eb-9e8d-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botUpdate', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}
+debug line from upsertSesVariables - sesVariables =  [{'sessionId': '40fc5a58-405d-11eb-9e8d-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botUpdate', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}]
+debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
+debug line from deleteSession - session =  []
+debug line from deleteSession - sesVariables =  []
+debug line from deleteSession - session =  []
+debug line from deleteSession - sesVariables =  []
+debug line from deleteSession - session =  []
+debug line from deleteSession - sesVariables =  []
+exStr =  Block.foo = lambda self: requests.get(url="http://127.0.0.1:2030/adminapi/listbots", params={"dummy": "dummy"})
+debug line from getInput - out =  [{'botName': 'HotelBooking'}]
+debug line from setVariables - updDict =  {'sessionId': '2085531c-405f-11eb-a89c-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botUpdate', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}
+debug line from upsertSesVariables - sesVariables =  [{'sessionId': '2085531c-405f-11eb-a89c-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botUpdate', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}]
+debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
+debug line from deleteSession - session =  []
+debug line from deleteSession - sesVariables =  []
+exStr =  Block.foo = lambda self: requests.get(url="http://127.0.0.1:2030/adminapi/listbots", params={"dummy": "dummy"})
+debug line from getInput - out =  [{'botName': 'HotelBooking'}]
+debug line from setVariables - updDict =  {'sessionId': '35f3af82-405f-11eb-9824-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botDeploy', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}
+debug line from upsertSesVariables - sesVariables =  [{'sessionId': '35f3af82-405f-11eb-9824-e4a7a0b3b6c6', 'userId': 'U01CYH277PD', 'journeyName': 'botDeploy', 'blockName': 'get_bot', 'sessionVariables': [{'botName': 'HotelBooking', 'scope': 'global'}]}]
+debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
+Debug line from resolveVariables - b = botName 
+match =  HotelBooking
+Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'process': 'modelTrain/intents/trainIntents.py'}
+Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'process': 'modelTrain/intents/trainIntents.py'}127.0.0.1 - - [17/Dec/2020 17:29:55] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:30:10] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 17:30:29] "[37mPOST /api/botController/ HTTP/1.1[0m" 200 -
+
+exStr =  Block.foo = lambda self: requests.post(url="http://127.0.0.1:2030/adminapi/botstart", json={"botName": "HotelBooking", "process": "modelTrain/intents/trainIntents.py"})
+debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
+debug line from getInput - out =  [{'selection': 'TKinter'}]
+Debug line from resolveVariables - b = botName 
+match =  HotelBooking
+Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'deploy': {'channel': 'TKinter', 'botControllerPort': '3000', 'intentControllerPort': '3005'}}
+Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'deploy': {'channel': 'TKinter', 'botControllerPort': '3000', 'intentControllerPort': '3005'}}
+exStr =  Block.foo = lambda self: requests.post(url="http://127.0.0.1:2030/adminapi/botHeader/", json={"botName": "HotelBooking", "deploy": {"channel": "TKinter", "botControllerPort": "3000", "intentControllerPort": "3005"}})
+debug line from getVariables - res =  [{'botName': 'HotelBooking'}]
+Debug line from resolveVariables - b = botName 
+match =  HotelBooking
+Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'process': 'botstart.py'}
+Debug line from resolveVariables - out =  {'botName': 'HotelBooking', 'process': 'botstart.py'}
+exStr =  Block.foo = lambda self: requests.post(url="http://127.0.0.1:2030/adminapi/botstart", json={"botName": "HotelBooking", "process": "botstart.py"})

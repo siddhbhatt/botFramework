@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, make_response
 import json
 import os
 import subprocess
+import multiprocessing
 
 STARTER_JSON = 'config/starter.json'
 app = Flask(__name__)
@@ -100,14 +101,33 @@ def getJourney():
 
     return jsonify(botdata)
 
+def run_proc(proc, botName):
+    s = subprocess.call(["python", proc, botName])
+    print(s)
+
 @app.route("/adminapi/botstart", methods=["POST"])
 def interact_actions():
     data = request.get_json(force=True)
     botName = data['botName']
     proc = data['process']
-    s = subprocess.call(["python", proc, botName])
+
+    p = multiprocessing.Process(target=run_proc, args=(proc, botName,))
+    p.start()
+    print ('process name = ', p.name, 'process id = ', p.pid)
+    p.join()
+    
     #s = subprocess.Popen(["python", "botstart.py", "AdminBot"])
-    print(s)
+    #print(s)
     return make_response(jsonify("Successful"), 200)
 
-app.run(port=2030, debug=True)
+@app.route('/adminapi/listbots/', methods=['GET'])
+def list_bots():
+    bots = []
+    for x in os.listdir('bots'):
+        if os.path.isdir(os.path.join('bots', x)):
+            bots.append(x)
+
+    return jsonify({'botName': bots})
+
+if __name__ == '__main__':
+    app.run(port=2030, debug=True)

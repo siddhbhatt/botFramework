@@ -1,0 +1,9 @@
+botController response >>  [{'message': {'attachments': [{'atachmentSeq': None, 'attachmentDesc': None, 'attachmentId': None, 'attachmentType': None, 'options': []}], 'messageId': 'greet1', 'messageText': 'Hello there', 'messageType': 'plaintext'}}]
+botController response >>  [{'message': {'attachments': [{'atachmentSeq': None, 'attachmentDesc': None, 'attachmentId': None, 'attachmentType': None, 'options': []}], 'messageId': 'options1', 'messageText': 'I can book rooms at one of our properties', 'messageType': 'plaintext'}}]
+botController response >>  [{'message': {'attachments': [{'atachmentSeq': None, 'attachmentDesc': None, 'attachmentId': None, 'attachmentType': None, 'options': []}], 'messageId': 'greet1', 'messageText': 'Hello there', 'messageType': 'plaintext'}}]
+Traceback (most recent call last):
+  File "channelAdapters/tkinter/tkinteract.py", line 75, in <module>
+    base.mainloop()
+  File "C:\Users\SIDDHARTHABHATTACHAR\anaconda3\envs\py36\lib\tkinter\__init__.py", line 1283, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt

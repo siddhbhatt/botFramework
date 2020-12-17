@@ -1,10 +1,13 @@
-2020-12-17 17:31:04.342347: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
+2020-12-17 18:43:42.051459: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
  * Debugger is active!
  * Debugger PIN: 742-439-305
  * Running on http://127.0.0.1:3005/ (Press CTRL+C to quit)
+127.0.0.1 - - [17/Dec/2020 19:26:43] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 19:28:13] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 19:28:38] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
 forrtl: error (200): program aborting due to control-C event
 Image              PC                Routine            Line        Source             
-libifcoremd.dll    00007FFA0FBF3B58  Unknown               Unknown  Unknown
+libifcoremd.dll    00007FFA28F93B58  Unknown               Unknown  Unknown
 KERNELBASE.dll     00007FFA91C49D93  Unknown               Unknown  Unknown
 KERNEL32.DLL       00007FFA94277034  Unknown               Unknown  Unknown
 ntdll.dll          00007FFA9441CEC1  Unknown               Unknown  Unknown

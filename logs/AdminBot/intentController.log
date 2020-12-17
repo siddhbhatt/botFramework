@@ -1,31 +1,26 @@
-2020-12-17 16:33:35.888608: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
+2020-12-17 18:37:58.569531: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
  * Serving Flask app "intentController" (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
  * Debug mode: on
  * Restarting with stat
-2020-12-17 16:34:08.946541: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
+2020-12-17 18:38:40.355199: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX AVX2
  * Debugger is active!
  * Debugger PIN: 742-439-305
  * Running on http://127.0.0.1:2005/ (Press CTRL+C to quit)
-127.0.0.1 - - [17/Dec/2020 16:38:09] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:38:18] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:57:23] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:14:43] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:17:55] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:27:57] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:28:07] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:28:43] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:39:45] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:39:56] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:41:22] "[37mPOST /api/intentController/ HTTP/1.1[0m" 200 -
 forrtl: error (200): program aborting due to control-C event
 Image              PC                Routine            Line        Source             
-libifcoremd.dll    00007FFA0FBF3B58  Unknown               Unknown  Unknown
+libifcoremd.dll    00007FFA28F93B58  Unknown               Unknown  Unknown
 KERNELBASE.dll     00007FFA91C49D93  Unknown               Unknown  Unknown
 KERNEL32.DLL       00007FFA94277034  Unknown               Unknown  Unknown
 ntdll.dll          00007FFA9441CEC1  Unknown               Unknown  Unknown
 forrtl: error (200): program aborting due to control-C event
 Image              PC                Routine            Line        Source             
-libifcoremd.dll    00007FFA0FBF3B58  Unknown               Unknown  Unknown
+libifcoremd.dll    00007FFA28F93B58  Unknown               Unknown  Unknown
 KERNELBASE.dll     00007FFA91C49D93  Unknown               Unknown  Unknown
 KERNEL32.DLL       00007FFA94277034  Unknown               Unknown  Unknown
 ntdll.dll          00007FFA9441CEC1  Unknown               Unknown  Unknown

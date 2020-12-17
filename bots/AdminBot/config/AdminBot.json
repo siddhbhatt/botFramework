@@ -303,9 +303,6 @@
 					"next": [{
 						"journeyName": "botDeploy",
 						"blockName": "get_bot"
-					},{
-						"journeyName": "botDeploy",
-						"blockName": "train_execute"
 					}]
 				},
 				{
@@ -327,15 +324,17 @@
 					},
 					"output": {
 						"message": {
-							"messageId": null,
-							"messageText": null,
-							"messageType": null,
+							"messageId": "m15",
+							"messageText": "Model training will be started and it may take a bit. Please confirm.",
+							"messageType": "plaintext",
 							"attachments": [{
-								"attachmentId": null,
-								"atachmentSeq": null,
-								"attachmentDesc": null,
-								"attachmentType": null,
-								"options": []
+								"attachmentId": "a1",
+								"atachmentSeq": 1,
+								"attachmentDesc": "ConfirmDeploy",
+								"attachmentType": "button",
+								"options": [{
+									"value": "Confirm"
+								}]
 							}]
 						}
 					},
@@ -344,41 +343,10 @@
 						"value": "#botName#",
 						"scope": "global"
 					}],
-					"next": []
-				},
-				{
-					"blockSeq": 2,
-					"blockName": "train_start",
-					"type": "output",
-					"getVariables": ["botName"],
-					"inputMapping": [],
-					"rules": {},
-					"api": {
-						"apiType": null,
-						"endpoint": null,
-						"params": [{
-							"key": "",
-							"value": ""
-						}],
-						"dataMapping": {},
-						"outputMapping": {}
-					},
-					"output": {
-						"message": {
-							"messageId": "m2",
-							"messageText": "Intent model training for %botName% will be started. This may take a bit.",
-							"messageType": "plaintext",
-							"attachments": [{
-								"attachmentId": null,
-								"atachmentSeq": null,
-								"attachmentDesc": null,
-								"attachmentType": null,
-								"options": []
-							}]
-						}
-					},
-					"setVariables": [],
-					"next": []
+					"next": [{
+						"journeyName": "botDeploy",
+						"blockName": "train_execute"
+					}]
 				},
 				{
 					"blockSeq": 3,
@@ -494,9 +462,9 @@
 					},
 					"output": {
 						"message": {
-							"messageId": "m2",
-							"messageText": "Your bot should be up shortly",
-							"messageType": "plaintext",
+							"messageId": null,
+							"messageText": null,
+							"messageType": null,
 							"attachments": [{
 								"attachmentId": null,
 								"atachmentSeq": null,
@@ -856,7 +824,7 @@
 				"output": {
 					"message": {
 						"messageId": "m7",
-						"messageText": "I can help you: *build a bot, *deploy a bot",
+						"messageText": "I can help you: *build a bot, *update bot metadata and *deploy a bot",
 						"messageType": "plaintext",
 						"attachments": [{
 							"attachmentId": null,

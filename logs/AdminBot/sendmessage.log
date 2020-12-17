@@ -7,43 +7,15 @@
  * Debugger is active!
  * Debugger PIN: 742-439-305
  * Running on http://127.0.0.1:2015/ (Press CTRL+C to quit)
-127.0.0.1 - - [17/Dec/2020 16:38:10] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:38:18] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:38:43] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:38:59] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:39:26] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:39:31] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:57:24] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:59:05] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 16:59:19] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:04:16] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:14:43] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:14:50] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:17:56] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:27:58] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:28:08] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:28:18] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:28:44] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:29:56] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:30:11] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
-127.0.0.1 - - [17/Dec/2020 17:30:30] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:39:46] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:39:56] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:41:23] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:41:29] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:42:34] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
+127.0.0.1 - - [17/Dec/2020 18:42:46] "[37mPOST /slack/sendMessage/ HTTP/1.1[0m" 200 -
 section >>  [{'type': 'section', 'block_id': 'm5', 'text': {'type': 'mrkdwn', 'text': 'Hello there'}}]
-section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please specify name of the bot. Please note bot name should be unique and should not have any spaces.'}}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Please specify the pupose of the bot. Please note your input text will be used to respond to clients of HospitalBooking as the purpose of the bot'}}]
-section >>  [{'type': 'section', 'block_id': 'm3', 'text': {'type': 'mrkdwn', 'text': 'Initial metadata for HospitalBooking bot has been initialized. What do you want to do next?'}}, {'type': 'actions', 'block_id': 'a2', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Deploy and Test the bot'}, 'value': 'Deploy and Test the bot'}, {'type': 'button', 'text': {'type': 'plain_text', 'text': 'Review config and add Journeys'}, 'value': 'Review config and add Journeys'}]}]
-section >>  [{'type': 'section', 'block_id': 'm15', 'text': {'type': 'mrkdwn', 'text': 'You will be redirected to a website. To continue, press Ok'}}, {'type': 'actions', 'block_id': 'a1', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Ok'}, 'value': 'Ok'}]}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Please visit the link to review/update HospitalBooking bot metadata - http://127.0.0.1:4040/'}}]
-section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please select bot'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'AdminBot'}, 'value': 'AdminBot'}, {'text': {'type': 'plain_text', 'text': 'HospitalBooking'}, 'value': 'HospitalBooking'}, {'text': {'type': 'plain_text', 'text': 'HotelBooking'}, 'value': 'HotelBooking'}, {'text': {'type': 'plain_text', 'text': 'TestBot2'}, 'value': 'TestBot2'}]}}]
+section >>  [{'type': 'section', 'block_id': 'm7', 'text': {'type': 'mrkdwn', 'text': 'I can help you: *build a bot, *deploy a bot'}}]
+section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please select bot'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'AdminBot'}, 'value': 'AdminBot'}, {'text': {'type': 'plain_text', 'text': 'HotelBooking'}, 'value': 'HotelBooking'}, {'text': {'type': 'plain_text', 'text': 'TestBot2'}, 'value': 'TestBot2'}]}}]
+section >>  [{'type': 'section', 'block_id': 'm15', 'text': {'type': 'mrkdwn', 'text': 'Model training will be started and it may take a bit. Please confirm.'}}, {'type': 'actions', 'block_id': 'a1', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Confirm'}, 'value': 'Confirm'}]}]
 section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Intent training is complete. Please select a communication channel'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'Slack'}, 'value': 'Slack'}, {'text': {'type': 'plain_text', 'text': 'TKinter'}, 'value': 'TKinter'}, {'text': {'type': 'plain_text', 'text': 'Skype'}, 'value': 'Skype'}, {'text': {'type': 'plain_text', 'text': 'Whatsapp'}, 'value': 'Whatsapp'}, {'text': {'type': 'plain_text', 'text': 'Custom'}, 'value': 'Custom'}]}}]
 section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'You are all set to start your bot'}}, {'type': 'actions', 'block_id': 'a1', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Run bot'}, 'value': 'Run bot'}]}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Your bot should be up shortly'}}]
-section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please select bot'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'AdminBot'}, 'value': 'AdminBot'}, {'text': {'type': 'plain_text', 'text': 'HotelBooking'}, 'value': 'HotelBooking'}, {'text': {'type': 'plain_text', 'text': 'TestBot2'}, 'value': 'TestBot2'}]}}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Please visit the link to review/update HotelBooking bot metadata - http://127.0.0.1:4000/'}}]
-section >>  [{'type': 'section', 'block_id': 'm6', 'text': {'type': 'mrkdwn', 'text': 'Thanks, see you soon!'}}]
-section >>  [{'type': 'section', 'block_id': 'm5', 'text': {'type': 'mrkdwn', 'text': 'Hello there'}}]
-section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please select bot'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'AdminBot'}, 'value': 'AdminBot'}, {'text': {'type': 'plain_text', 'text': 'HotelBooking'}, 'value': 'HotelBooking'}, {'text': {'type': 'plain_text', 'text': 'TestBot2'}, 'value': 'TestBot2'}]}}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Please visit the link to review/update HotelBooking bot metadata - http://127.0.0.1:4000/'}}]
-section >>  [{'type': 'section', 'block_id': 'm1', 'text': {'type': 'mrkdwn', 'text': 'Please select bot'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'AdminBot'}, 'value': 'AdminBot'}, {'text': {'type': 'plain_text', 'text': 'HotelBooking'}, 'value': 'HotelBooking'}, {'text': {'type': 'plain_text', 'text': 'TestBot2'}, 'value': 'TestBot2'}]}}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Intent training is complete. Please select a communication channel'}, 'accessory': {'action_id': 'a1', 'type': 'static_select', 'options': [{'text': {'type': 'plain_text', 'text': 'Slack'}, 'value': 'Slack'}, {'text': {'type': 'plain_text', 'text': 'TKinter'}, 'value': 'TKinter'}, {'text': {'type': 'plain_text', 'text': 'Skype'}, 'value': 'Skype'}, {'text': {'type': 'plain_text', 'text': 'Whatsapp'}, 'value': 'Whatsapp'}, {'text': {'type': 'plain_text', 'text': 'Custom'}, 'value': 'Custom'}]}}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'You are all set to start your bot'}}, {'type': 'actions', 'block_id': 'a1', 'elements': [{'type': 'button', 'text': {'type': 'plain_text', 'text': 'Run bot'}, 'value': 'Run bot'}]}]
-section >>  [{'type': 'section', 'block_id': 'm2', 'text': {'type': 'mrkdwn', 'text': 'Your bot should be up shortly'}}]

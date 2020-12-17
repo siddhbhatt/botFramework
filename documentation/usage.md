@@ -1,6 +1,6 @@
 <h1 align="center">BotFramework Usage</h1>
 
-BotFramework provides a AdminBot and a Web User Interface to create/manage other Chatbots. Check out the experience [here](https://www.youtube.com/watch?v=X1D0ceIVELw)
+BotFramework provides a AdminBot and a Web User Interface to create/manage other Chatbots. Check out the experience [here.](https://www.youtube.com/watch?v=X1D0ceIVELw)  
 For current version, AdminBot is supported in Slack only.
 
 ## Setup

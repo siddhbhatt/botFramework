@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<style>
+body{
+    width:100%;
+    height: 100%;
+    background-image: url_for('static', filename='Bot-Rot_1309024801-700.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+</style>
+   <head>
+      <title>Dynamic Input Fields</title>
+      <!--Jquery Link-->
+      <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+      <!-- Bootstrap Styling-->
+      <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+      <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+      <!-- custom stylesheet-->
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dynamic_w.css') }}">
+      <!-- custom javascript-->
+      <script type="text/javascript" src="{{ url_for('static', filename='dynamic_w.js') }}"></script>
+	  <script type="text/javascript" src="{{ url_for('static', filename='newinput.js') }}"></script>
+	  <script type="text/javascript" src="{{ url_for('static', filename='apidynamic.js') }}"></script>
+	  <script type="text/javascript" src="{{ url_for('static', filename='getvariable.js') }}"></script>
+	  <script type="text/javascript" src="{{ url_for('static', filename='addrules.js') }}"></script>
+	  <script type="text/javascript" src="{{ url_for('static', filename='setvariable.js') }}"></script>
+	  <script type="text/javascript" src="{{ url_for('static', filename='nextvariable.js') }}"></script>
+	  
+   </head>
+   <body background="{{ url_for('static', filename='Bot-Rot_1309024801-700.jpg')}}">
+      <div class="container">
+         <div class="row centered-form">
+            <div class="col-xs-15 col-sm-15 col-md-15 col-sm-offset-1 col-md-offset-1">
+               <div class="panel panel-info">
+                  <div class="panel-heading text-center">
+                     <h1 class="panel-title">Add Content</h1>
+                  </div>
+                  <div class="panel-body">
+                     <form role="form" method="post" action="{{ url_for('workflowfinal') }}">
+					 Bot Name which has been entered :
+                            <input type="text" name="botname" value="{{botname}}" readonly>
+                            Other Values which has been entered :
+                                    <input type="text" name="intents" value="{{univaljson}}" readonly>
+                        <div class="row">
+                           <div class="col-xs-4 col-sm-4 col-md-4">
+                              <div class="form-group">
+                                 Journey Name
+                                 <input name="jrn[0][]" type="text" placeholder="Journey Name" class="form-control"/>
+                              </div>
+                           </div>
+                        </div>
+						<div class="row">
+                              <div class="col-xs-7 col-sm-7 col-md-7">
+                                 <button class="btn btn-primary list_add_button" type="button">+ Button For Adding New Block</button>
+                              </div>
+                           </div>
+                        <div class="list_wrapper" >
+						<div style="border: thick solid black">
+                           
+                           <div class="row">
+                              <div class="col-xs-4 col-sm-4 col-md-4">
+                                 <div class="form-group">
+                                    Block Name
+                                    <input name="list[0][]" type="text" placeholder="Bolck Name" class="form-control"/>
+                                 </div>
+                              </div>
+                              <div class="col-xs-4 col-sm-4 col-md-4">
+                                 <div class="form-group">
+                                    Block Type
+                                    <select name="blktype[0][]" id="db" class="form-control">
+                                       <option value="">..</option>
+                                       <option value="output">output</option>
+                                       <option value="input">input</option>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--start Get Variables-->
+						   <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <h4><b>Get Variables</b></h4>
+                                    <div class="row">
+                                       <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <button class="btn btn-primary list_add_button_getvariable" type="button">+ Add New Get Variables</button>
+                                       </div>
+                                    </div>
+									<div class="list_wrapper_getvariable" >
+									<div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Variable Name
+                                             <input name="variableName[0][]" type="text" placeholder="Varaible Name" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Value
+                                             <input name="value[0][]" type="text" placeholder="Value for Variable" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Scope
+                                             <input name="scope[0][]" type="text" placeholder="Scope of Variable" class="form-control"/>
+                                          </div>
+                                       </div>
+                                    </div>
+									</div>
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--end-->
+						   <!--rules-->
+						   <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <h4><b>Rules</b></h4>
+                                    <div class="row">
+                                       <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <button class="btn btn-primary list_add_button_rule" type="button">+ Add New Rules</button>
+                                       </div>
+                                    </div>
+									<div class="list_wrapper_rule" >
+									<div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Rule
+                                             <input name="rule[0][]" type="text" placeholder="Add Rules" class="form-control"/>
+                                          </div>
+                                       </div>
+                                    </div>
+									</div>
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--rules ends-->
+                           <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <h4><b>Input Mapping</b></h4>
+                                    <div class="row">
+                                       <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <button class="btn btn-primary list_add_button_input" type="button">+ Add New Input</button>
+                                       </div>
+                                    </div>
+									<div class="list_wrapper_input" >
+									<div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Input Name
+                                             <input name="imdata[0][]" type="text" placeholder="Input Name" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Input Path
+                                             <input name="imchannel[0][]" type="text" placeholder="Input Path" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Input OutputFormat
+                                             <input name="imuser[0][]" type="text" placeholder="User OutputFormat" class="form-control"/>
+                                          </div>
+                                       </div>
+                                    </div>
+									</div>
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--start set variable-->
+						   <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <h4><b>Set Variables</b></h4>
+                                    <div class="row">
+                                       <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <button class="btn btn-primary list_add_button_setvariable" type="button">+ Add New Set Variables</button>
+                                       </div>
+                                    </div>
+									<div class="list_wrapper_setvariable" >
+									<div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Variable Name
+                                             <input name="svariableName[0][]" type="text" placeholder="Set Varaible Name" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Value
+                                             <input name="svalue[0][]" type="text" placeholder="Set Value for Variable" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Scope
+                                             <input name="sscope[0][]" type="text" placeholder="Set Scope of Variable" class="form-control"/>
+                                          </div>
+                                       </div>
+                                    </div>
+									</div>
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--end set variable-->
+						   <!--Start Next-->
+						   <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <h4><b>Next Variables</b></h4>
+                                    <div class="row">
+                                       <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <button class="btn btn-primary list_add_button_nextvar" type="button">+ Add New Next Variables</button>
+                                       </div>
+                                    </div>
+									<div class="list_wrapper_nextvar" >
+									<div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                            Journey Name
+                                             <input name="njourneyName[0][]" type="text" placeholder="Next Journey Name" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Block Name
+                                             <input name="nblockName[0][]" type="text" placeholder="Next Block Name" class="form-control"/>
+                                          </div>
+                                       </div>
+                                    </div>
+									</div>
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--End Next-->
+                           <!--here for API-->
+                           <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <b>
+                                       <h4><b>API</b></h4>
+                                    </b>
+									<div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             End Point URL:
+                                             <input name="apiurl[0][]" type="text" placeholder="https://hostname:portnumber" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-2 col-sm-2 col-md-2">
+                                          <div class="form-group">
+                                             Choose a API Type:
+                                             <select name="apitype[0][]" id="db" class="form-control">
+                                                <option value="">..</option>
+                                                <option value="GET">GET</option>
+                                                <option value="POST">POST</option>
+                                                <option value="POST">PUT</option>
+                                             </select>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             API Params Array:
+                                             <input name="apiparams[0][]" type="text" placeholder="[{'key': null, 'value': null}]" class="form-control"/>
+                                          </div>
+                                       </div>
+									   </div>
+									 <div class="row">
+									
+                                       <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <div class="form-group">
+                                             Data Mapping - botName
+                                             <input name="apidmbotname[0][]" type="text" placeholder="Data Mapping Botname" class="form-control"/>
+                                          </div>
+                                       </div>
+									   <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <div class="form-group">
+                                             Data Mapping - optionText
+                                             <input name="apidmoptiontext[0][]" type="text" placeholder="Data Mapping Option Text" class="form-control"/>
+                                          </div>
+                                       </div>
+									   </div>
+									   
+									   <div class="row">
+									   
+									   <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <div class="form-group">
+                                             Output Mapping - name
+                                             <input name="apidmname[0][]" type="text" placeholder="Output Mapping Name" class="form-control"/>
+                                          </div>
+                                       </div>
+									   <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <div class="form-group">
+                                             Output Mapping - path
+                                             <input name="apidmpath[0][]" type="text" placeholder="Output Mapping Path Array" class="form-control"/>
+                                          </div>
+                                       </div>
+									   <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <div class="form-group">
+                                             Data Mapping - Output Format
+                                             <input name="apidmoutformat[0][]" type="text" placeholder="Output Mapping  Output Format" class="form-control"/>
+                                          </div>
+                                       </div>
+									   <div class="col-xs-4 col-sm-4 col-md-4">
+                                          <div class="form-group">
+                                             Data Mapping - Output Tag
+                                             <input name="apidmoutputtag[0][]" type="text" placeholder="Data Mapping Output Tag" class="form-control"/>
+                                          </div>
+                                       </div>
+									   </div>
+									   
+                                    
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+                           <!--end of API-->	
+						   <!--ouput Mapping-->
+						    <div class="row">
+                              <div class="col-xs-11 col-sm-11 col-md-11">
+                                 <div class="form-group">
+                                    <h4><b>Output Variables</b></h4>
+                                    <div style="border: thin solid black">
+                                    <div class="row">
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             OutPut Message Id
+                                             <input name="outmessageId[0][]" type="text" placeholder="OutPut Message Id" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Message Text
+                                             <input name="outmessageText[0][]" type="text" placeholder="OutPut Message Text" class="form-control"/>
+                                          </div>
+                                       </div>
+                                       <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Message Type
+                                             <input name="outmessageType[0][]" type="text" placeholder="Output Message Type" class="form-control"/>
+                                          </div>
+                                       </div>
+									   <div class="col-xs-3 col-sm-3 col-md-3">
+                                          <div class="form-group">
+                                             Output Attachments
+                                             <input name="outattachment[0][]" type="text" placeholder="Output Message Attachments" class="form-control"/>
+                                          </div>
+                                       </div>
+                                    </div>
+									</div>
+									</div>
+                                 </div>
+                              </div>
+                           </div>
+						   <!--end of outpit mapping-->
+</div>						   
+                        </div>
+                        <input type="submit" value="Next" class="btn btn-info btn-block">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

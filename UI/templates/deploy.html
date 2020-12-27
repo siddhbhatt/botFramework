@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<style>
+body{
+    width:100%;
+    height: 100%;
+    background-image: url_for('static', filename='6-ways-containers-ensure-your-application-deployment-will-never-fail-800x400px.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+#hidden_div {
+    display: none;
+}
+</style>
+<head>
+	<title>Dynamic NRE - bot4bot</title>
+        <!--Jquery Link-->
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<!-- Bootstrap Styling-->
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	
+	
+	<!-- custom stylesheet-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dynamic.css') }}">
+
+	<!-- custom javascript-->
+	<script type="text/javascript">
+function showDiv(divId, element)
+{
+    document.getElementById(divId).style.display = element.value == 'Slack' ? 'block' : 'none';
+}
+</script>
+</head>
+
+<body background="{{ url_for('static', filename='6-ways-containers-ensure-your-application-deployment-will-never-fail-800x400px.jpg')}}">
+  
+    <div class="container">
+        <div class="row centered-form">
+            <div class="col-xs-12 col-sm-10 col-md-10 col-sm-offset-2 col-md-offset-2">
+                <div class="panel panel-info">
+
+                    <div class="panel-heading text-center">
+                        
+                       
+                    </div>
+
+                    <div class="panel-body" style="color:white">
+                        <form role="form" method="post" action="{{ url_for('deploy') }}">
+                            Bot Name which has been entered :
+                            <input type="text" name="botname" value="{{botname}}" readonly>
+                            Other Values which has been entered :
+                                    <input type="text" name="intents" value="{{univaljson}}" readonly>
+							
+							 
+                            <h3 class="panel-title">Add Details For Deployment </h3>
+							<br/>
+                            <div class="list_wrapper">  
+                                <div class="row">
+								<div class="col-xs-8 col-sm-6 col-md-6">
+                                 <h3 class="panel-title">Channel Type: </h3>
+								 <div class="form-group">
+                                    <select name="channel" id="channel" class="form-control" onchange="showDiv('hidden_div', this)">
+                                       <option value="">..</option>
+                                       <option value="Slack">Slack</option>
+                                       <option value="App">App</option>
+                                    </select>
+                                 </div>
+                              </div>
+								</div>
+								<div class="row">
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+
+                                        <div class="form-group">
+                                            Bot Controller Port Number:
+                                            <input name="botControllerPort" type="text" placeholder="TCP Port Number" class="form-control"/>
+                                            
+                                        </div>
+                                    </div>
+								</div>
+								<div class="row">
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            Intent Controller Port Number:
+                                            <input  name="intentControllerPort" type="text" placeholder="TCP Port Number" class="form-control"/>
+                                        </div>
+                                    </div> 
+
+                                   
+                                </div>
+								<div class="row">
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            NER Controller Port Number:
+                                            <input  name="nerControllerPort" type="text" placeholder="TCP Port Number" class="form-control"/>
+                                        </div>
+                                    </div> 
+
+                                   
+                                </div>
+								<div id="hidden_div">
+								<div class="row">
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            Slack Interact Port Number:
+                                            <input  name="slackInteractPort" type="text" placeholder="TCP Port Number" class="form-control"/>
+                                        </div>
+                                    </div> 
+								</div>
+								<div class="row">
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            Slack Send Message Port Number:
+                                            <input  name="slackSendMessagePort" type="text" placeholder="TCP Port Number" class="form-control"/>
+                                        </div>
+                                    </div> 
+									</div>
+									<div class="row">
+                                    <div class="col-xs-5 col-sm-5 col-md-5">
+                                        <div class="form-group">
+                                            Slack Application Name:
+                                            <input  name="slackAppName" type="text" placeholder="Slack Application Name" class="form-control"/>
+                                        </div>
+                                    </div> 
+									</div>
+									<div class="row">
+                                    <div class="col-xs-8 col-sm-8 col-md-8">
+                                        <div class="form-group">
+                                            Slack Token :
+                                            <input  name="slackBotToken" type="text" placeholder="Slack Token Value" class="form-control"/>
+                                        </div>
+                                    </div> 
+									</div>
+									<div class="row">
+                                    <div class="col-xs-8 col-sm-8 col-md-8">
+                                        <div class="form-group">
+                                            Slack Ver Token :
+                                            <input  name="slackVerToken" type="text" placeholder="Slack Ver Token Value" class="form-control"/>
+                                        </div>
+                                    </div> 
+									</div>
+								</div>
+								<div class="row">
+                                    <div class="col-xs-10 col-sm-10 col-md-10">
+                                        <div class="form-group">
+                                            Deployment Path :
+                                            <input  name="deploymentpath" type="text" placeholder="Deploy Here" class="form-control"/>
+                                        </div>
+                                    </div> 
+									</div>
+                            </div>
+                 
+                            <input type="submit" value="Deploy" class="btn btn-info btn-block">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,338 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"botName": {
+			"type": "string"
+		},
+		"intents": {
+			"type": "array",
+			"items": [{
+				"type": "object",
+				"properties": {
+					"patterns": {
+						"type": "array",
+						"items": [{
+							"type": "string"
+						}]
+					},
+					"journeyName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"patterns",
+					"journeyName"
+				]
+			}]
+		},
+		"ner": {
+			"type": "array",
+			"items": [{
+				"type": "object",
+				"properties": {
+					"patterns": {
+						"type": "array",
+						"items": [{
+							"type": "string"
+						}]
+					},
+					"entities": {
+						"type": "array",
+						"items": [{
+							"type": "object",
+							"properties": {
+								"keyword": {
+									"type": "string"
+								},
+								"name": {
+									"type": "string"
+								}
+							}
+						}]
+					}
+				}
+			}]
+		},
+		"journey": {
+			"type": "array",
+			"items": [{
+				"type": "object",
+				"properties": {
+					"journeyName": {
+						"type": "string"
+					},
+					"blocks": {
+						"type": "array",
+						"items": [{
+							"type": "object",
+							"properties": {
+								"blockSeq": {
+									"type": "integer"
+								},
+								"blockName": {
+									"type": "string"
+								},
+								"type": {
+									"type": "string"
+								},
+								"getVariables": {
+									"type": "array",
+									"items": [{
+										"type": "object",
+										"properties": {
+											"variableName": {
+												"type": "string"
+											},
+											"value": {
+												"type": "string"
+											},
+											"scope": {
+												"type": "string"
+											}
+										}
+									}]
+								},
+								"inputMapping": {
+									"type": "array",
+									"items": [{
+										"type": "object",
+										"properties": {
+											"map": {
+												"type": "object",
+												"properties": {
+													"name": {
+														"type": "string"
+													},
+													"path": {
+														"type": "array",
+														"items": [{
+																"type": "string"
+															},
+															{
+																"type": "string"
+															}
+														]
+													},
+													"outputFormat": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}]
+								},
+								"rules": {
+									"type": "object",
+									"properties": {
+										"oneOf": {
+											"type": "array",
+											"items": [{
+												"type": "object",
+												"properties": {
+													"#selection#": {
+														"type": "string"
+													}
+												}
+											}]
+										}
+									}
+								},
+								"api": {
+									"type": "object",
+									"properties": {
+										"apiType": {
+											"type": "string"
+										},
+										"endpoint": {
+											"type": "string"
+										},
+										"params": {
+											"type": "array",
+											"items": [{
+												"type": "object",
+												"properties": {
+													"key": {
+														"type": "string"
+													},
+													"value": {
+														"type": "string"
+													}
+												}
+											}]
+										},
+										"dataMapping": {
+											"type": "object"
+										},
+										"outputMapping": {
+											"type": "array",
+											"items": [{
+												"type": "object",
+												"properties": {
+													"map": {
+														"type": "object",
+														"properties": {
+															"name": {
+																"type": "string"
+															},
+															"path": {
+																"type": "array",
+																"items": [{
+																	"type": "string"
+																}]
+															},
+															"outputFormat": {
+																"type": "string"
+															},
+															"outputTag": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}]
+										}
+									}
+								},
+								"output": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "object",
+											"properties": {
+												"messageId": {
+													"type": "string"
+												},
+												"messageText": {
+													"type": "string"
+												},
+												"messageType": {
+													"type": "string"
+												},
+												"attachments": {
+													"type": "array",
+													"items": [{
+														"type": "object",
+														"properties": {
+															"attachmentId": {
+																"type": "string"
+															},
+															"atachmentSeq": {
+																"type": "integer"
+															},
+															"attachmentDesc": {
+																"type": "string"
+															},
+															"attachmentType": {
+																"type": "string"
+															},
+															"options": {
+																"type": "array",
+																"items": [{
+																	"type": "object",
+																	"properties": {
+																		"value": {
+																			"type": "string"
+																		}
+																	},
+																	"required": [
+																		"value"
+																	]
+																}]
+															}
+														}
+													}]
+												}
+											}
+										}
+									},
+									"required": [
+										"message"
+									]
+								},
+								"setVariables": {
+									"type": "array",
+									"items": [{
+										"type": "object",
+										"properties": {
+											"variableName": {
+												"type": "string"
+											},
+											"value": {
+												"type": "string"
+											},
+											"scope": {
+												"type": "string"
+											}
+										}
+									}]
+								},
+								"next": {
+									"type": "array",
+									"items": [{
+										"type": "object",
+										"properties": {
+											"journeyName": {
+												"type": "string"
+											},
+											"blockName": {
+												"type": "string"
+											}
+										}
+									}]
+								}
+							},
+							"required": [
+								"blockSeq",
+								"blockName"
+							]
+						}]
+					}
+				},
+				"required": [
+					"journeyName",
+					"blocks"
+				]
+			}]
+		},
+		"deploy": {
+			"type": "object",
+			"properties": {
+				"channel": {
+					"type": "string"
+				},
+				"botControllerPort": {
+					"type": "string"
+				},
+				"intentControllerPort": {
+					"type": "string"
+				},
+				"nerControllerPort": {
+					"type": "string"
+				},
+				"slackInteractPort": {
+					"type": "string"
+				},
+				"slackSendMessagePort": {
+					"type": "string"
+				},
+				"slackAppName": {
+					"type": "string"
+				},
+				"slackBotToken": {
+					"type": "string"
+				},
+				"slackVerToken": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"required": [
+		"botName",
+		"intents",
+		"ner",
+		"journey",
+		"deploy"
+	]
+}

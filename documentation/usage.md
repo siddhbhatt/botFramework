@@ -39,5 +39,6 @@ python botstart.py AdminBot
 ```python
 python adminstart.py
 ```
-
+### Monitoring
+Review application log for Bots in logs folder in project home
 

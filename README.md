@@ -18,5 +18,6 @@ The project intends to
 [Usage notes](./documentation/usage.md)
 
 ## Team
-[Siddhartha Bhattacharya](https://siddhbhatt.github.io/cv/)
+[Siddhartha Bhattacharya](https://siddhbhatt.github.io/cv/)  
+
 [Arghadeep Chaudhury](https://github.com/deepstartup)

@@ -8,8 +8,8 @@
 		"slackInteractPort": "2025",
 		"slackSendMessagePort": "2015",
 		"slackAppName": "TestBot2",
-		"slackBotToken": "xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD",
-		"slackVerToken": "m7DbUPPDQGuK1cU9Ox2kESLT"
+		"slackBotToken": "",
+		"slackVerToken": ""
 	},
 	"intents": [{
 			"patterns": ["Hi there", "How are you", "Is anyone there?", "Hey", "Hello", "Good day"],

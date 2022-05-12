@@ -9,8 +9,8 @@
 		"slackInteractPort": "1025",
 		"slackSendMessagePort": "1015",
 		"slackAppName": "TestBot2",
-		"slackBotToken": "xoxb-1464215873904-1448607286740-I6aOkhGmybOhBpJyh7z1bGtD",
-		"slackVerToken": "m7DbUPPDQGuK1cU9Ox2kESLT"
+		"slackBotToken": "",
+		"slackVerToken": ""
 	},
 	"intents": [{
 			"patterns": ["I want to book a cab", "book my cab", "get me taxi", "book a car"],
